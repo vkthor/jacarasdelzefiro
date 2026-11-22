@@ -1,0 +1,93 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { programs } from '../data/programs';
+import { tr, ui, url, type Lang } from '../i18n';
+import fotoA from '../assets/fotos/fias-percusion.jpg';
+import fotoN from '../assets/fotos/almunecar-concierto-1.jpg';
+import duo from '../assets/fotos/duo-del-zefiro.jpg';
+import petirrojo from '../assets/graficos/ave-petirrojo-vuelo.webp';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = {
+  title: { es: 'Programas', en: 'Programs' },
+  lead: {
+    es: 'Dos programas para seis músicos, con repertorio sacro hispano del Renacimiento y el Barroco y varios estrenos en tiempos modernos.',
+    en: 'Two programs for six musicians, with sacred Hispanic repertoire from the Renaissance and Baroque and several modern-day premieres.',
+  },
+  description: {
+    es: 'Avecillas y La gracia y el gozo: los programas de Jácaras del Zéfiro, con programa completo, notas, textos y dossier.',
+    en: 'Avecillas and La gracia y el gozo: the programs of Jácaras del Zéfiro, with full program, notes, texts and press kit.',
+  },
+  stats: {
+    avecillas: { es: '12 obras · 6 estrenos en tiempos modernos · unos 70 minutos', en: '12 works · 6 modern-day premieres · approx. 70 minutes' },
+    navidad: { es: '11 obras · Renacimiento y Barroco · unos 70 minutos', en: '11 works · Renaissance and Baroque · approx. 70 minutes' },
+  },
+  duoTitle: { es: 'Y además, en dúo', en: 'And also, as a duo' },
+  duoText: {
+    es: 'Víctor Cruz y Juan Carlos de Mulder forman el Dúo del Zéfiro, con *La Cómica Historia de Don Quijote*: Purcell y Eccles para la trilogía londinense de Thomas D’Urfey, una ópera de cámara con dramaturgia y vestuario propios.',
+    en: 'Víctor Cruz and Juan Carlos de Mulder form the Dúo del Zéfiro, with *The Comical History of Don Quixote*: Purcell and Eccles for Thomas D’Urfey’s London trilogy, a chamber opera with its own staging and costumes.',
+  },
+  adapt: {
+    es: 'Ambos programas se adaptan al espacio y a la ocasión, y *Avecillas* puede llevarse a otros tiempos litúrgicos sin perder el hilo de las aves. Si te interesa algo a medida, escríbenos.',
+    en: 'Both programs adapt to the venue and the occasion, and *Avecillas* can be taken to other liturgical seasons without losing its thread of birds. If you are interested in something tailor-made, write to us.',
+  },
+};
+const items = [
+  { p: programs.avecillas, photo: fotoA, stats: t.stats.avecillas, route: 'avecillas' as const },
+  { p: programs.navidad, photo: fotoN, stats: t.stats.navidad, route: 'navidad' as const },
+];
+import { inline } from '../utils';
+---
+<Base lang={lang} route="programs" title={tr(t.title, lang)} description={tr(t.description, lang)}>
+  <PageHead kicker="Jácaras del Zéfiro" title={tr(t.title, lang)} lead={tr(t.lead, lang)} bird={petirrojo} />
+  <section class="section">
+    <div class="wrap list">
+      {items.map(({ p, photo, stats, route }, i) => (
+        <article class:list={['row', { 'row--rev': i % 2 }]}>
+          <a href={url(route, lang)} class="row__img"><Image src={photo} alt="" widths={[600, 1000]} sizes="(max-width: 860px) 100vw, 560px" format="webp" quality={76} /></a>
+          <div>
+            <h2 class="title-program row__title"><a href={url(route, lang)}>{p.title}</a></h2>
+            <p class="subtitle-spaced">{tr(p.subtitle, lang)}</p>
+            <p class="lead row__lead">{tr(p.lead, lang)}</p>
+            <p class="row__stats">{tr(stats, lang)}</p>
+            <div class="btn-row">
+              <a class="btn btn--solid" href={url(route, lang)}>{tr(ui.seeProgram, lang)}</a>
+              <a class="btn" href={url(p.bookletKey, lang)}>{tr(ui.booklet, lang)}</a>
+            </div>
+          </div>
+        </article>
+      ))}
+      <p class="note center adapt" set:html={inline(tr(t.adapt, lang))} />
+    </div>
+  </section>
+  <section class="section linen">
+    <div class="wrap duo">
+      <Image src={duo} alt="Víctor Cruz y Juan Carlos de Mulder" width={360} height={360} fit="cover" class="duo__img" />
+      <div>
+        <p class="kicker">Dúo del Zéfiro</p>
+        <h2 class="title-section">{tr(t.duoTitle, lang)}</h2>
+        <p set:html={inline(tr(t.duoText, lang))} />
+        <a class="btn" href={url('duo', lang)}>{lang === 'es' ? 'Ver el espectáculo' : 'See the show'}</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .list { display: grid; gap: clamp(56px, 8vw, 96px); }
+  .row { display: grid; grid-template-columns: 1fr 1.1fr; gap: clamp(28px, 5vw, 64px); align-items: center; }
+  .row--rev .row__img { order: 2; }
+  .row__img :global(img) { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; box-shadow: 0 24px 40px -28px rgba(42, 31, 24, 0.7); }
+  .row__title { font-size: clamp(2.2rem, 3.4vw + 1rem, 3.8rem); }
+  .row__title a { color: inherit; text-decoration: none; }
+  .row__lead { font-size: 1.2rem; margin-top: 1rem; }
+  .row__stats { font-family: var(--sans); font-size: 0.74rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-ink); }
+  .adapt { max-width: 60ch; margin-inline: auto; }
+  @media (max-width: 860px) { .row, .row--rev { grid-template-columns: 1fr; } .row--rev .row__img { order: 0; } }
+  .duo { display: grid; grid-template-columns: 300px 1fr; gap: clamp(28px, 5vw, 64px); align-items: center; max-width: 960px; }
+  .duo :global(.duo__img) { width: 100%; border-radius: 50%; aspect-ratio: 1; object-fit: cover; box-shadow: 0 0 0 6px var(--gold); }
+  @media (max-width: 760px) { .duo { grid-template-columns: 1fr; } .duo :global(.duo__img) { width: 220px; margin-inline: auto; } }
+</style>

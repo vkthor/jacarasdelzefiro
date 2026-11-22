@@ -1,0 +1,71 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { formatDate, splitConcerts } from '../data/concerts';
+import { tr, ui, url, type Lang } from '../i18n';
+import golondrina from '../assets/graficos/ave-golondrina-2.webp';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const { upcoming, past } = splitConcerts();
+const t = {
+  title: { es: 'Conciertos', en: 'Concerts' },
+  lead: { es: 'Dónde hemos estado y dónde vamos a estar.', en: 'Where we have been and where we are going.' },
+  description: { es: 'Próximos conciertos y trayectoria de Jácaras del Zéfiro y del Dúo del Zéfiro.', en: 'Upcoming concerts and past performances of Jácaras del Zéfiro and the Dúo del Zéfiro.' },
+  upcoming: { es: 'Próximos conciertos', en: 'Upcoming concerts' },
+  none: {
+    es: 'Muy pronto anunciaremos nuevas fechas. ¿Quieres llevarnos a tu ciclo o festival?',
+    en: 'New dates will be announced very soon. Would you like to bring us to your series or festival?',
+  },
+  past: { es: 'Trayectoria', en: 'Past concerts' },
+  info: { es: 'Más información', en: 'More information' },
+  duo: { es: 'Dúo del Zéfiro', en: 'Dúo del Zéfiro' },
+};
+---
+<Base lang={lang} route="concerts" title={tr(t.title, lang)} description={tr(t.description, lang)}>
+  <PageHead kicker="Jácaras del Zéfiro" title={tr(t.title, lang)} lead={tr(t.lead, lang)} bird={golondrina} />
+  <section class="section section--tight">
+    <div class="wrap narrow">
+      <h2 class="title-section">{tr(t.upcoming, lang)}</h2>
+      {upcoming.length === 0 ? (
+        <div class="empty">
+          <p>{tr(t.none, lang)}</p>
+          <a class="btn btn--solid" href={url('contact', lang)}>{tr(ui.writeUs, lang)}</a>
+        </div>
+      ) : (
+        <ul class="concerts">
+          {upcoming.map((c) => <li><time datetime={c.date}>{formatDate(c.date, lang)}{c.time && `, ${c.time}`}</time><strong>{c.city}</strong> · {c.venue}<br /><em>{tr(c.program, lang)}</em> · {tr(c.series, lang)}</li>)}
+        </ul>
+      )}
+    </div>
+  </section>
+  <section class="section section--tight linen-light">
+    <div class="wrap narrow">
+      <h2 class="title-section">{tr(t.past, lang)}</h2>
+      <ul class="concerts">
+        {past.map((c) => (
+          <li>
+            <time datetime={c.date}>{formatDate(c.date, lang)}{c.time && ` · ${c.time}`}</time>
+            <p class="concert__where"><strong>{c.city}</strong> · {c.venue}</p>
+            <p class="concert__what"><em>{tr(c.program, lang)}</em>{c.ensemble === 'duo' && <span class="tag">{tr(t.duo, lang)}</span>} · {tr(c.series, lang)}</p>
+            {c.note && <p class="concert__note">{tr(c.note, lang)}</p>}
+            {c.url && <a href={c.url} rel="noopener" class="concert__link">{tr(t.info, lang)} ↗</a>}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .empty { padding: 1.6rem; border: 1px dashed var(--gold); text-align: center; }
+  .concerts { list-style: none; margin: 0; padding: 0; }
+  .concerts li { padding: 1.3rem 0; border-bottom: 1px solid var(--line); }
+  .concerts time { display: block; font-family: var(--sans); font-size: 0.76rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold-ink); margin-bottom: 0.3rem; }
+  .concerts p { margin: 0; }
+  .concert__where strong { color: var(--maroon); font-size: 1.15rem; }
+  .concert__what em { color: var(--coral); font-weight: 600; }
+  .concert__note { font-style: italic; color: var(--ink-soft); }
+  .concert__link { font-family: var(--sans); font-size: 0.74rem; letter-spacing: 0.08em; }
+  .tag { font-family: var(--sans); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; background: var(--maroon); color: var(--paper); padding: 0.15em 0.6em; border-radius: 999px; margin-left: 0.5rem; vertical-align: middle; }
+</style>

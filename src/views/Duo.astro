@@ -1,0 +1,116 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Dropcap from '../components/Dropcap.astro';
+import PageHead from '../components/PageHead.astro';
+import Portrait from '../components/Portrait.astro';
+import { musicians } from '../data/musicians';
+import { tr, ui, url, type Lang } from '../i18n';
+import { inline } from '../utils';
+import duo from '../assets/fotos/duo-del-zefiro.jpg';
+import pareja from '../assets/graficos/pareja-baile.webp';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const victor = musicians.find((m) => m.id === 'victor-cruz')!;
+const jc = musicians.find((m) => m.id === 'juan-carlos-de-mulder')!;
+
+const t = {
+  title: { es: 'La Cómica Historia de Don Quijote', en: 'The Comical History of Don Quixote' },
+  description: {
+    es: 'Dúo del Zéfiro: Víctor Cruz y Juan Carlos de Mulder en La Cómica Historia de Don Quijote, con música de Purcell y Eccles para la trilogía de Thomas D’Urfey (Londres, 1694).',
+    en: 'Dúo del Zéfiro: Víctor Cruz and Juan Carlos de Mulder in The Comical History of Don Quixote, with music by Purcell and Eccles for Thomas D’Urfey’s trilogy (London, 1694).',
+  },
+  lead: {
+    es: 'Purcell, Eccles y Courteville para la trilogía de Thomas D’Urfey (Londres, 1694): una ópera de cámara para voz, cuerda pulsada y escena.',
+    en: 'Purcell, Eccles and Courteville for Thomas D’Urfey’s trilogy (London, 1694): a chamber opera for voice, plucked strings and stage.',
+  },
+  p1: {
+    es: 'En el Londres de 1694, el *Quijote* de Cervantes se transformó en una farsa musical desbordante de ingenio, locura y deseo. Thomas D’Urfey escribió una comedia extravagante, una *play with music* en la que Henry Purcell y otros autores dieron voz a enamorados, ninfas, hechiceras y caballeros delirantes, y dibujaron con igual viveza la figura visionaria de don Quijote y la sabiduría terrenal de Sancho Panza. La historia nacida en Castilla encontró así una nueva vida en el escenario londinense, entre canciones y escenas de locura donde lo heroico y lo ridículo conviven con toda naturalidad.',
+    en: 'In London in 1694, Cervantes’s *Don Quixote* became a musical farce brimming with wit, madness and desire. Thomas D’Urfey wrote an extravagant comedy, a *play with music* in which Henry Purcell and other composers gave voice to lovers, nymphs, sorceresses and deluded knights, painting with equal vividness the visionary figure of Don Quixote and the earthy wisdom of Sancho Panza. The story born in Castile thus found new life on the London stage, among songs and mad scenes where the heroic and the ridiculous live side by side.',
+  },
+  p2: {
+    es: 'Esta adaptación de Víctor Cruz para voz y cuerda pulsada se centra en la música de la obra y acompaña cada pieza con breves interludios dramáticos que sitúan al público dentro de cada desventura y enredo de don Quijote. El espectáculo lleva dramaturgia de Beatriz González Calderón y vestuario de Berta Grasset.',
+    en: 'This adaptation by Víctor Cruz for voice and plucked strings focuses on the music of the play, framing each piece with short dramatic interludes that place the audience inside each of Don Quixote’s misadventures and entanglements. The show features stage direction and dramaturgy by Beatriz González Calderón and costumes by Berta Grasset.',
+  },
+  p3: {
+    es: 'Es un formato ligero y flexible, que funciona igual de bien en un teatro que al aire libre —patios, claustros, castillos— y no necesita piano.',
+    en: 'It is a light, flexible format that works just as well in a theatre as in the open air —courtyards, cloisters, castles— and needs no piano.',
+  },
+  facts: [
+    { l: { es: 'Intérpretes', en: 'Performers' }, v: { es: 'Víctor Cruz, canto y narración · Juan Carlos de Mulder, archilaúd', en: 'Víctor Cruz, voice and narration · Juan Carlos de Mulder, archlute' } },
+    { l: { es: 'Escena', en: 'Stage' }, v: { es: 'Dramaturgia de Beatriz González Calderón · vestuario de Berta Grasset', en: 'Dramaturgy by Beatriz González Calderón · costumes by Berta Grasset' } },
+    { l: { es: 'Estreno', en: 'Premiere' }, v: { es: 'Clásicos en Verano (Comunidad de Madrid), del 14 al 16 de agosto de 2026, tres funciones', en: 'Clásicos en Verano (Comunidad de Madrid), 14–16 August 2026, three performances' } },
+  ],
+  program: { es: 'Programa', en: 'Program' },
+  watch: { es: 'Mira un fragmento del estreno en Instagram', en: 'Watch an excerpt from the premiere on Instagram' },
+};
+const works = [
+  ['When the world first knew creation', 'Henry Purcell'],
+  ['Ye Nymphs and Sylvan Gods', 'John Eccles'],
+  ['Let the dreadful engines of eternal will', 'Henry Purcell'],
+  ['If you will love me', lang === 'es' ? 'Anónimo' : 'Anonymous'],
+  ['Lads and lasses blithe and gay', 'Henry Purcell'],
+  ['I burn, I burn', 'John Eccles'],
+  ['From rosy bowers', 'Henry Purcell'],
+  ['Cease, Hymen, cease', 'Raphael Courteville'],
+  ['Since times are so bad', 'Henry Purcell'],
+];
+---
+<Base lang={lang} route="duo" title={`Dúo del Zéfiro · ${tr(t.title, lang)}`} description={tr(t.description, lang)} image={duo}>
+  <PageHead kicker="Dúo del Zéfiro" title={tr(t.title, lang)} lead={tr(t.lead, lang)} bird={pareja} birdSide="left" />
+  <section class="section">
+    <div class="wrap duo-grid">
+      <div class="prose">
+        <Dropcap text={tr(t.p1, lang)} />
+        <p set:html={inline(tr(t.p2, lang))} />
+        <p set:html={inline(tr(t.p3, lang))} />
+        <dl class="facts" style="grid-template-columns:1fr; margin-top:1.5rem">
+          {t.facts.map((f) => <div><dt>{tr(f.l, lang)}</dt><dd>{tr(f.v, lang)}</dd></div>)}
+        </dl>
+      </div>
+      <figure>
+        <Image src={duo} alt="Víctor Cruz y Juan Carlos de Mulder" widths={[500, 900]} sizes="(max-width: 860px) 100vw, 460px" format="webp" quality={78} class="duo-photo" />
+      </figure>
+    </div>
+  </section>
+  <section class="section linen">
+    <div class="wrap narrow">
+      <div class="center"><p class="kicker">{tr(t.program, lang)}</p><span class="ornament" aria-hidden="true"></span></div>
+      <ol class="duo-works">
+        {works.map(([w, c]) => <li><em>{w}</em><span>{c}</span></li>)}
+      </ol>
+      <p class="center" style="margin-top:2rem"><a class="btn" href="https://www.instagram.com/p/DeBdY_sBIPD/" rel="noopener">{tr(t.watch, lang)}</a></p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="wrap duo-people">
+      {[victor, jc].map((m) => (
+        <a href={`${url('ensemble', lang)}#${m.id}`} class="duo-person">
+          <Portrait src={m.photo} alt={m.name} size={160} />
+          <span class="kicker" style="margin:0.8rem 0 0">{m.id === 'victor-cruz' ? (lang === 'es' ? 'Canto y narración' : 'Voice and narration') : (lang === 'es' ? 'Archilaúd' : 'Archlute')}</span>
+          <strong>{m.name}</strong>
+        </a>
+      ))}
+    </div>
+    <div class="wrap narrow center" style="margin-top:2.5rem">
+      <div class="btn-row" style="justify-content:center">
+        <a class="btn btn--solid" href={lang === 'es' ? '/dossieres/Duo-del-Zefiro-Quijote-dossier-ES.pdf' : '/dossieres/Duo-del-Zefiro-Don-Quixote-dossier-EN.pdf'} download>{tr(ui.dossier, lang)}</a>
+        <a class="btn" href={url('contact', lang)}>{tr(ui.writeUs, lang)}</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .duo-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: clamp(32px, 5vw, 72px); align-items: start; }
+  .duo-grid :global(.duo-photo) { width: 100%; box-shadow: 0 24px 40px -28px rgba(42, 31, 24, 0.8); }
+  @media (max-width: 860px) { .duo-grid { grid-template-columns: 1fr; } }
+  .duo-works { list-style: none; padding: 0; margin: 0; counter-reset: w; }
+  .duo-works li { counter-increment: w; display: flex; justify-content: space-between; gap: 1rem; padding: 0.7rem 0; border-bottom: 1px solid var(--line); }
+  .duo-works li::before { content: counter(w, upper-roman); font-family: var(--display); color: var(--gold-ink); width: 2.4rem; flex-shrink: 0; font-size: 0.85rem; padding-top: 0.2rem; }
+  .duo-works em { flex: 1; font-size: 1.15rem; color: var(--maroon); }
+  .duo-works span { color: var(--ink-soft); text-align: right; }
+  .duo-people { display: flex; justify-content: center; gap: clamp(32px, 8vw, 120px); flex-wrap: wrap; }
+  .duo-person { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: var(--maroon); font-size: 1.2rem; }
+</style>

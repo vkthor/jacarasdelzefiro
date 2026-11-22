@@ -1,0 +1,22 @@
+---
+// Párrafo con capitular xilográfica del siglo XVI (F. G. Delamotte, Book of Ornamental Alphabets, 1859; dominio público).
+import { Image } from 'astro:assets';
+import { inline } from '../utils';
+
+interface Props { text: string }
+const { text } = Astro.props;
+const letters = import.meta.glob<{ default: ImageMetadata }>('../assets/capitulares/*.webp', { eager: true });
+const first = text.charAt(0);
+const key = first.normalize('NFD').replace(/[̀-ͯ]/g, '').toUpperCase();
+const img = letters[`../assets/capitulares/${key}.webp`]?.default;
+const rest = img ? text.slice(1) : text;
+---
+<p class="dc">
+  {img && <Image src={img} alt="" width={180} class="dc__img" aria-hidden="true" />}
+  {img && <span class="sr-only">{first}</span>}<Fragment set:html={inline(rest)} />
+</p>
+
+<style>
+  .dc { overflow: hidden; }
+  .dc :global(.dc__img) { float: left; width: 5.9em; height: auto; margin: 0.36em 0.8em 0.25em 0; box-shadow: 0 6px 14px -10px rgba(42, 31, 24, 0.7); }
+</style>

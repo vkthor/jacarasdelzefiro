@@ -1,0 +1,42 @@
+---
+// Programa de concierto: obras con autor, fuente y transcripción.
+import type { Work } from '../data/programs';
+import { tr, ui, type Lang } from '../i18n';
+import { composerName, inline, names } from '../utils';
+
+interface Props { works: Work[]; lang: Lang }
+const { works, lang } = Astro.props;
+const hasPremieres = works.some((w) => w.premiere);
+---
+<ol class="works">
+  {works.map((w) => (
+    <li class="work">
+      <h3 class="work__title">
+        {w.title}{w.voices && <span class="work__voices"> ({tr(w.voices, lang)})</span>}
+        {w.premiere && <span class="star" title={tr(ui.premiere, lang)} aria-label={tr(ui.premiere, lang)}>✱</span>}
+      </h3>
+      <p class="work__composer">{composerName(w.composer, lang)}{w.dates && <span class="work__dates"> ({w.dates})</span>}</p>
+      <p class="work__meta"><span set:html={inline(tr(w.genre, lang))} /> · <span set:html={inline(tr(w.source, lang))} /></p>
+      <p class="work__transcr">{tr(ui.transcription, lang)} {names(w.transcription, lang)}</p>
+    </li>
+  ))}
+</ol>
+{hasPremieres && <p class="legend"><span class="star" aria-hidden="true">✱</span> {tr(ui.premiere, lang)}</p>}
+
+<style>
+  .works { list-style: none; margin: 0; padding: 0; counter-reset: work; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(24px, 4vw, 64px); }
+  @media (max-width: 760px) { .works { grid-template-columns: 1fr; } }
+  .work { counter-increment: work; position: relative; padding: 1.1rem 0 1.1rem 3rem; border-top: 1px solid var(--line); break-inside: avoid; }
+  .work::before {
+    content: counter(work, upper-roman); position: absolute; left: 0; top: 1.15rem; width: 2.3rem;
+    font-family: var(--display); font-size: 0.85rem; color: var(--gold-ink); letter-spacing: 0.05em;
+  }
+  .work__title { font-family: var(--serif); font-size: 1.28rem; font-weight: 600; color: var(--maroon); margin: 0 0 0.15rem; }
+  .work__voices { font-weight: 400; color: var(--ink-soft); font-size: 0.92em; }
+  .work__composer { margin: 0; font-size: 1.05rem; }
+  .work__dates { color: var(--ink-soft); }
+  .work__meta { margin: 0.15rem 0 0; font-size: 0.95rem; color: var(--ink-soft); }
+  .work__transcr { margin: 0.1rem 0 0; font-size: 0.92rem; font-style: italic; color: var(--ink-soft); }
+  .star { color: var(--coral); margin-left: 0.3em; font-size: 0.85em; font-style: normal; }
+  .legend { font-family: var(--sans); font-size: 0.78rem; letter-spacing: 0.06em; color: var(--ink-soft); margin-top: 1.2rem; }
+</style>

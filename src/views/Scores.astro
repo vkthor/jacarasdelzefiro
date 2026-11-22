@@ -1,0 +1,96 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { otherScores, ownScores } from '../data/scores';
+import { tr, ui, url, type Lang } from '../i18n';
+import { composerName, names } from '../utils';
+import petirrojo from '../assets/graficos/ave-petirrojo-1.webp';
+
+const thumbs = import.meta.glob<{ default: ImageMetadata }>('../assets/partituras/*.png', { eager: true });
+const thumbFor = (file: string) => thumbs[`../assets/partituras/${file.split('/').pop()!.replace('.pdf', '.png')}`]?.default;
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = {
+  title: { es: 'Partituras', en: 'Scores' },
+  lead: {
+    es: 'El patrimonio es de todos: aquí tienes nuestras transcripciones para que puedas estudiarlas y cantarlas.',
+    en: 'Heritage belongs to everyone: here are our transcriptions, so that you can study and sing them.',
+  },
+  description: {
+    es: 'Transcripciones de Jácaras del Zéfiro de música sacra hispana del Barroco, en PDF y de libre descarga para uso no comercial.',
+    en: 'Transcriptions by Jácaras del Zéfiro of Hispanic Baroque sacred music, as free PDF downloads for non-commercial use.',
+  },
+  intro: {
+    es: 'Rescatar patrimonio no tiene sentido si se queda en un cajón. Estas son las transcripciones que hemos hecho nosotros a partir de los manuscritos originales, y que interpretamos en nuestros programas. Puedes descargarlas y usarlas libremente para estudiar e interpretar, siempre sin fines comerciales; si las programas, cita la transcripción y, si quieres, cuéntanoslo: nos hará mucha ilusión.',
+    en: 'Rescuing heritage makes no sense if it stays in a drawer. These are the transcriptions we have made ourselves from the original manuscripts and perform in our programs. You may download them and use them freely for study and performance, always for non-commercial purposes; if you program them, please credit the transcription and, if you like, let us know: it will make our day.',
+  },
+  own: { es: 'Nuestras transcripciones', en: 'Our transcriptions' },
+  others: { es: 'Otras transcripciones que cantamos', en: 'Other transcriptions we sing' },
+  othersText: {
+    es: 'Estas ediciones son de otros musicólogos, que las ofrecen en abierto. Gracias a ellos por su trabajo.',
+    en: 'These editions are by other musicologists, who make them freely available. Our thanks to them for their work.',
+  },
+  pages: { es: 'páginas', en: 'pages' },
+  by: { es: 'Transcripción de', en: 'Transcription by' },
+};
+---
+<Base lang={lang} route="scores" title={tr(t.title, lang)} description={tr(t.description, lang)}>
+  <PageHead kicker="Jácaras del Zéfiro" title={tr(t.title, lang)} lead={tr(t.lead, lang)} bird={petirrojo} />
+  <section class="section section--tight">
+    <div class="wrap narrow"><p>{tr(t.intro, lang)}</p></div>
+  </section>
+  <section class="section section--tight">
+    <div class="wrap">
+      <h2 class="title-section center">{tr(t.own, lang)}</h2>
+      <span class="ornament" aria-hidden="true"></span>
+      <ul class="scores">
+        {ownScores.map((s) => {
+          const th = thumbFor(s.file);
+          return (
+            <li class="score">
+              <a href={s.file} download class="score__thumb">
+                {th && <Image src={th} alt="" width={300} format="webp" quality={70} />}
+              </a>
+              <h3 class="score__title">{s.title}{s.premiere && <span class="star" title={tr(ui.premiere, lang)}>✱</span>}</h3>
+              <p class="score__composer">{composerName(s.composer, lang)}</p>
+              <p class="score__meta">{lang === 'es' ? s.voices : s.voicesEn} · {s.pages} {tr(t.pages, lang)}</p>
+              <p class="score__by">{tr(t.by, lang)} {names(s.by, lang)}</p>
+              <a class="btn" href={s.file} download>{tr(ui.download, lang)} PDF</a>
+            </li>
+          );
+        })}
+      </ul>
+      <p class="legend"><span class="star" aria-hidden="true">✱</span> {tr(ui.premiere, lang)}</p>
+    </div>
+  </section>
+  <section class="section section--tight linen-light">
+    <div class="wrap narrow">
+      <h2 class="title-section">{tr(t.others, lang)}</h2>
+      <p>{tr(t.othersText, lang)}</p>
+      <ul class="others">
+        {otherScores.map((s) => (
+          <li><a href={s.url} rel="noopener"><strong>{s.title}</strong></a> · {composerName(s.composer, lang)}<br /><span class="note">{tr(t.by, lang)} {names(s.by, lang)} · {s.where}</span></li>
+        ))}
+      </ul>
+      <p class="note">{lang === 'es' ? 'Para conocer el resto del repertorio, mira nuestros' : 'To see the rest of the repertoire, have a look at our'} <a href={url('programs', lang)}>{tr(ui.nav.programs, lang).toLowerCase()}</a>.</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .scores { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: clamp(24px, 3vw, 40px); }
+  .score { display: flex; flex-direction: column; align-items: flex-start; }
+  .score__thumb { display: block; width: 100%; background: #fff; border: 1px solid var(--line); box-shadow: 0 18px 30px -24px rgba(42, 31, 24, 0.7); margin-bottom: 1rem; overflow: hidden; aspect-ratio: 210 / 180; }
+  .score__thumb :global(img) { width: 100%; height: auto; object-fit: cover; object-position: top; transition: transform 0.4s; }
+  .score__thumb:hover :global(img) { transform: scale(1.04); }
+  .score__title { font-family: var(--serif); font-weight: 600; color: var(--maroon); font-size: 1.25rem; margin: 0; }
+  .score__composer { margin: 0; }
+  .score__meta, .score__by { margin: 0; font-size: 0.92rem; color: var(--ink-soft); }
+  .score__by { font-style: italic; margin-bottom: 0.9rem; }
+  .star { color: var(--coral); margin-left: 0.3em; }
+  .legend { font-family: var(--sans); font-size: 0.76rem; color: var(--ink-soft); margin-top: 1.4rem; }
+  .others { list-style: none; padding: 0; }
+  .others li { padding: 0.8rem 0; border-bottom: 1px solid var(--line); }
+</style>

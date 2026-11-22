@@ -1,0 +1,140 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { mentions, reviews } from '../data/press';
+import { formatDate } from '../data/concerts';
+import { imageCredits, photoCredits } from '../data/site';
+import { tr, ui, url, type Lang } from '../i18n';
+import { inline } from '../utils';
+import playa1 from '../assets/fotos/playa-1.jpg';
+import playa2 from '../assets/fotos/playa-2.jpg';
+import logo from '../assets/logo/logo.png';
+import trepador from '../assets/graficos/ave-trepador.webp';
+import { getImage } from 'astro:assets';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const hd1 = await getImage({ src: playa1, width: 2800, format: 'jpg', quality: 90 });
+const hd2 = await getImage({ src: playa2, width: 2800, format: 'jpg', quality: 90 });
+const logoPng = await getImage({ src: logo, width: 1000, format: 'png' });
+
+const t = {
+  title: { es: 'Prensa', en: 'Press' },
+  lead: { es: 'Críticas, apariciones en medios y material para prensa y programadores.', en: 'Reviews, media coverage and materials for press and programmers.' },
+  description: { es: 'Críticas de Jácaras del Zéfiro en Ritmo y Granada Hoy, apariciones en prensa y kit de prensa con fotos, logotipo, biografía y dossieres.', en: 'Reviews of Jácaras del Zéfiro in Ritmo and Granada Hoy, media coverage and press kit with photos, logo, biography and press kits.' },
+  reviews: { es: 'Críticas', en: 'Reviews' },
+  mentions: { es: 'En los medios', en: 'In the media' },
+  kit: { es: 'Kit de prensa', en: 'Press kit' },
+  kitText: {
+    es: 'Puedes usar estos materiales para difundir nuestros conciertos, citando a los autores de las fotos.',
+    en: 'You may use these materials to promote our concerts, crediting the photographers.',
+  },
+  shortBio: { es: 'Presentación breve', en: 'Short biography' },
+  bio: {
+    es: 'Jácaras del Zéfiro es un ensemble de música antigua fundado por el barítono Víctor Cruz y especializado en el repertorio hispano del Renacimiento y el Barroco. Combina investigación musicológica e instinto escénico para recuperar el pulso real de estas obras: su ímpetu, su danza y su capacidad de conmover. Cinco de sus seis músicos cantan y tocan a la vez (voces, cuerda pulsada, viola da gamba y percusión), y buena parte de su repertorio son estrenos en tiempos modernos transcritos de manuscritos catedralicios. Se presentó en 2025 en el ciclo Música en Adviento de la Junta de Andalucía y ha actuado en el Festival Internacional de Arte Sacro de Madrid, Guadix Clásica y el Festival de Música Española de Cádiz.',
+    en: 'Jácaras del Zéfiro is an early music ensemble founded by baritone Víctor Cruz, specialising in Hispanic repertoire of the Renaissance and Baroque. It combines musicological research with stage instinct to recover the true pulse of these works: their drive, their dance and their power to move. Five of its six musicians sing and play at the same time (voices, plucked strings, viola da gamba and percussion), and much of its repertoire consists of modern-day premieres transcribed from cathedral manuscripts. It made its debut in 2025 at the Junta de Andalucía’s Música en Adviento series and has performed at the Madrid International Festival of Sacred Art, Guadix Clásica and the Cádiz Festival of Spanish Music.',
+  },
+  credits: { es: 'Créditos de las fotos', en: 'Photo credits' },
+  photo: { es: 'Foto de grupo', en: 'Group photo' },
+  logo: { es: 'Logotipo (PNG)', en: 'Logo (PNG)' },
+  dossiers: { es: 'Dossieres', en: 'Press kits' },
+};
+---
+<Base lang={lang} route="press" title={tr(t.title, lang)} description={tr(t.description, lang)}>
+  <PageHead kicker="Jácaras del Zéfiro" title={tr(t.title, lang)} lead={tr(t.lead, lang)} bird={trepador} />
+
+  <section class="section">
+    <div class="wrap">
+      <h2 class="title-section center">{tr(t.reviews, lang)}</h2>
+      <span class="ornament" aria-hidden="true"></span>
+      <div class="grid-2">
+        {reviews.map((r) => (
+          <article class="review">
+            <p class="review__meta">{r.outlet} · {formatDate(r.date, lang)}</p>
+            <h3 class="review__head">«{r.headline}»</h3>
+            <blockquote><p>«{r.quote}»</p></blockquote>
+            <p class="review__by">{r.author}. <span set:html={inline(tr(r.context, lang))} /></p>
+            <a class="btn" href={r.url} rel="noopener">{tr(ui.readReview, lang)}</a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tight linen-light">
+    <div class="wrap narrow">
+      <h2 class="title-section">{tr(t.mentions, lang)}</h2>
+      <ul class="mentions">
+        {mentions.map((m) => (
+          <li><a href={m.url} rel="noopener"><strong>{m.outlet}</strong></a> <span class="mentions__date">{formatDate(m.date, lang)}</span><br />{tr(m.what, lang)}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="kit">
+    <div class="wrap">
+      <div class="center narrow" style="margin-inline:auto">
+        <h2 class="title-section">{tr(t.kit, lang)}</h2>
+        <p>{tr(t.kitText, lang)}</p>
+      </div>
+      <div class="kit">
+        <a class="kit__item" href={hd1.src} download="jacaras-del-zefiro-1.jpg">
+          <Image src={playa1} alt="" width={420} format="webp" quality={72} />
+          <span>{tr(t.photo, lang)} 1 · JPG · Domingo Campillo</span>
+        </a>
+        <a class="kit__item" href={hd2.src} download="jacaras-del-zefiro-2.jpg">
+          <Image src={playa2} alt="" width={420} format="webp" quality={72} />
+          <span>{tr(t.photo, lang)} 2 · JPG · Domingo Campillo</span>
+        </a>
+        <a class="kit__item kit__item--logo" href={logoPng.src} download="jacaras-del-zefiro-logo.png">
+          <Image src={logo} alt="" width={260} />
+          <span>{tr(t.logo, lang)}</span>
+        </a>
+      </div>
+      <div class="grid-2 kit-text">
+        <div>
+          <h3 class="kit-h">{tr(t.shortBio, lang)}</h3>
+          <p>{tr(t.bio, lang)}</p>
+        </div>
+        <div>
+          <h3 class="kit-h">{tr(t.dossiers, lang)}</h3>
+          <ul class="dl">
+            <li><a href={lang === 'es' ? '/dossieres/JdZ-Avecillas-dossier-ES.pdf' : '/dossieres/JdZ-Avecillas-dossier-EN.pdf'} download>Avecillas (PDF)</a></li>
+            <li><a href={lang === 'es' ? '/dossieres/JdZ-La-gracia-y-el-gozo-dossier-ES.pdf' : '/dossieres/JdZ-La-gracia-y-el-gozo-dossier-EN.pdf'} download>La gracia y el gozo (PDF)</a></li>
+            <li><a href={lang === 'es' ? '/dossieres/Duo-del-Zefiro-Quijote-dossier-ES.pdf' : '/dossieres/Duo-del-Zefiro-Don-Quixote-dossier-EN.pdf'} download>Dúo del Zéfiro · {lang === 'es' ? 'Quijote' : 'Don Quixote'} (PDF)</a></li>
+          </ul>
+          <h3 class="kit-h">{tr(t.credits, lang)}</h3>
+          <ul class="credits">
+            {photoCredits.map((c) => <li>{tr(c.what, lang)}: {c.who}</li>)}
+            <li>{tr(imageCredits, lang)}</li>
+          </ul>
+          <p><a href={url('contact', lang)}>{lang === 'es' ? 'Para cualquier otra consulta o material, escríbenos: te responderemos con mucho gusto.' : 'For any other enquiry or material, write to us: we will be happy to help.'}</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .review { background: var(--paper-warm); padding: clamp(24px, 3vw, 40px); border: 1px solid var(--line); display: flex; flex-direction: column; align-items: flex-start; }
+  .review__meta { font-family: var(--sans); font-size: 0.74rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold-ink); }
+  .review__head { font-family: var(--display); color: var(--maroon); font-size: clamp(1.4rem, 1vw + 1rem, 1.9rem); }
+  .review blockquote { margin: 0 0 0.6rem; font-style: italic; font-size: 1.2rem; color: var(--ink-soft); }
+  .review__by { font-size: 0.98rem; }
+  .review .btn { margin-top: auto; }
+  .mentions { list-style: none; margin: 0; padding: 0; }
+  .mentions li { padding: 0.8rem 0; border-bottom: 1px solid var(--line); }
+  .mentions a { text-decoration: none; }
+  .mentions__date { font-family: var(--sans); font-size: 0.72rem; letter-spacing: 0.08em; color: var(--gold-ink); margin-left: 0.4rem; }
+  .kit { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; margin: 2rem 0 3rem; }
+  .kit__item { display: flex; flex-direction: column; gap: 0.6rem; text-decoration: none; color: var(--ink); font-family: var(--sans); font-size: 0.76rem; letter-spacing: 0.05em; }
+  .kit__item :global(img) { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; border: 1px solid var(--line); transition: transform 0.3s; }
+  .kit__item--logo :global(img) { object-fit: contain; background: var(--paper-warm); padding: 1rem; }
+  .kit__item:hover :global(img) { transform: translateY(-3px); }
+  @media (max-width: 760px) { .kit { grid-template-columns: 1fr; } }
+  .kit-h { font-family: var(--display); color: var(--maroon); font-size: 1.3rem; }
+  .dl, .credits { padding-left: 1.1rem; }
+  .credits { font-size: 0.95rem; color: var(--ink-soft); }
+</style>

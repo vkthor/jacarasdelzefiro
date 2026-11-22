@@ -1,0 +1,162 @@
+---
+// Programa de mano digital: pensado para abrirse con un QR en el concierto.
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Dropcap from '../components/Dropcap.astro';
+import { programs, type ProgramKey } from '../data/programs';
+import { notes } from '../data/notes';
+import { musicians } from '../data/musicians';
+import { tr, ui, url, type Lang } from '../i18n';
+import { composerName, inline, plain } from '../utils';
+import textosAvecillas from '../data/textos/avecillas.json';
+import textosNavidad from '../data/textos/navidad.json';
+import petirrojo from '../assets/graficos/ave-petirrojo-3.webp';
+import gato from '../assets/logo/gato.png';
+
+interface Props { lang: Lang; program: ProgramKey }
+const { lang, program } = Astro.props;
+const p = programs[program];
+type Text = { title: string; subtitle: string; stanzas: string[][][] };
+const texts = (program === 'avecillas' ? textosAvecillas : textosNavidad) as Text[];
+const workFor = (title: string) => p.works.find((w) => w.title === title);
+const slug = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+
+const t = {
+  notes: { es: 'Notas al programa', en: 'Program notes' },
+  texts: { es: 'Textos cantados', en: 'Sung texts' },
+  textsNote: {
+    es: 'Los textos se reproducen con la grafía de las fuentes, ligeramente modernizada.',
+    en: 'Original texts with English translation. Spelling follows the sources, lightly modernised.',
+  },
+  performers: { es: 'Intérpretes', en: 'Performers' },
+  silence: { es: 'Por favor, silencia el móvil y baja el brillo de la pantalla. ¡Gracias!', en: 'Please silence your phone and dim your screen. Thank you!' },
+  original: { es: 'Original', en: 'Original' },
+  translation: { es: 'Traducción', en: 'English translation' },
+  index: { es: 'Índice', en: 'Contents' },
+};
+const route = program === 'avecillas' ? 'bookletAvecillas' as const : 'bookletNavidad' as const;
+---
+<Base lang={lang} route={route} title={`${tr(ui.booklet, lang)} · ${p.title}`} description={plain(`${tr(ui.booklet, lang)}: ${p.title}. ${tr(p.subtitle, lang)}. ${tr(ui.bookletLong, lang)}.`)}>
+  <header class="bk-head linen">
+    <div class="wrap narrow center">
+      <Image src={gato} alt="" width={90} class="bk-cat" loading="eager" />
+      <p class="kicker">{tr(ui.booklet, lang)} · Jácaras del Zéfiro</p>
+      <h1 class="title-program">{p.title}</h1>
+      <p class="subtitle-spaced">{tr(p.subtitle, lang)}</p>
+      <p class="bk-silence">{tr(t.silence, lang)}</p>
+      <nav class="bk-index" aria-label={tr(t.index, lang)}>
+        <a href="#programa">{tr(ui.nav.programs, lang).replace(/s$/, '')}</a>
+        <a href="#notas">{tr(t.notes, lang)}</a>
+        <a href="#textos">{tr(t.texts, lang)}</a>
+        <a href="#interpretes">{tr(t.performers, lang)}</a>
+      </nav>
+    </div>
+  </header>
+  <div class="torn" aria-hidden="true"></div>
+
+  <section class="section section--tight" id="programa">
+    <div class="wrap narrow">
+      <ol class="bk-program">
+        {p.works.map((w) => {
+          const has = texts.some((x) => x.title === w.title);
+          return (
+            <li>
+              <span class="bk-program__t">
+                {has ? <a href={`#${slug(w.title)}`}>{w.title}</a> : <span>{w.title}</span>}
+                {w.premiere && <span class="star" aria-label={tr(ui.premiere, lang)}>✱</span>}
+              </span>
+              <span class="bk-program__by">{composerName(w.composer, lang)}{w.dates ? ` (${w.dates})` : ''}</span>
+            </li>
+          );
+        })}
+      </ol>
+      <p class="legend"><span class="star" aria-hidden="true">✱</span> {tr(ui.premiere, lang)} · <a href={url(p.key, lang)}>{lang === 'es' ? 'Fuentes y transcripciones' : 'Sources and transcriptions'}</a></p>
+    </div>
+  </section>
+
+  <section class="section section--tight linen-light" id="notas">
+    <div class="wrap narrow prose">
+      <p class="kicker">{tr(t.notes, lang)}</p>
+      {notes[program][lang].map((para, i) => i === 0 ? <Dropcap text={para} /> : <p set:html={inline(para)} />)}
+      <p class="signature">Víctor Cruz</p>
+      {program === 'avecillas' && (
+        <p class="note">{lang === 'es' ? 'Agradecimientos' : 'Acknowledgements'}: Eduardo López Banzo, Mariano Lambea, Lola Josa, Raúl Angulo, Nancho Álvarez, Omar Morales, Iolanda Serrano {lang === 'es' ? 'y' : 'and'} Beatriz González Calderón.</p>
+      )}
+    </div>
+  </section>
+
+  <section class="section" id="textos">
+    <div class="wrap" style="max-width: 980px">
+      <div class="center">
+        <p class="kicker">{tr(t.texts, lang)}</p>
+        <span class="ornament" aria-hidden="true"></span>
+        <p class="note">{tr(t.textsNote, lang)}</p>
+      </div>
+      {texts.map((x) => {
+        const w = workFor(x.title);
+        const sub = lang === 'en' ? x.subtitle : (w ? tr(w.genre, 'es') : '');
+        return (
+          <article class:list={['text', { 'text--bi': lang === 'en' }]} id={slug(x.title)}>
+            <h2 class="text__title">{x.title}</h2>
+            <p class="text__sub">{w ? composerName(w.composer, lang) : ''}{sub && <> · <span set:html={inline(sub)} /></>}</p>
+            {x.stanzas.map((st) => (
+              <div class="stanza">
+                {st.map(([o, tr2]) => (
+                  lang === 'en'
+                    ? <p class="line"><span class="o">{o}</span><span class="t">{tr2}</span></p>
+                    : <p class="line"><span class="o">{o}</span></p>
+                ))}
+              </div>
+            ))}
+          </article>
+        );
+      })}
+      <Image src={petirrojo} alt="" width={110} class="bk-end" />
+    </div>
+  </section>
+
+  <section class="section section--tight linen" id="interpretes">
+    <div class="wrap narrow center">
+      <p class="kicker">{tr(t.performers, lang)}</p>
+      <h2 class="title-section">Jácaras del Zéfiro</h2>
+      <ul class="cast">
+        {musicians.map((m) => <li><span class="cast__role">{tr(m.role, lang)}</span> <a href={`${url('ensemble', lang)}#${m.id}`}>{m.name}</a></li>)}
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .bk-head { padding: clamp(40px, 6vw, 80px) 0 clamp(40px, 6vw, 72px); }
+  .bk-head :global(.bk-cat) { width: 74px; margin: 0 auto 1rem; }
+  .bk-head .title-program { font-size: clamp(2.4rem, 7vw, 4.6rem); }
+  .bk-silence { font-style: italic; color: var(--ink-soft); margin-top: 1.2rem; font-size: 1rem; }
+  .bk-index { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem 1.4rem; margin-top: 1.2rem; }
+  .bk-index a { font-family: var(--sans); font-size: 0.74rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; }
+  .bk-program { list-style: none; margin: 0; padding: 0; counter-reset: w; }
+  .bk-program li { counter-increment: w; display: grid; grid-template-columns: 2.2rem 1fr; padding: 0.55rem 0; border-bottom: 1px solid var(--line); }
+  .bk-program li::before { content: counter(w, upper-roman); grid-row: span 2; font-family: var(--display); color: var(--gold-ink); font-size: 0.85rem; padding-top: 0.25rem; }
+  .bk-program__t { grid-column: 2; }
+  .bk-program__t a, .bk-program__t > span:not(.star) { font-weight: 600; font-size: 1.15rem; text-decoration: none; color: var(--maroon); }
+  .bk-program__by { grid-column: 2; color: var(--ink-soft); font-size: 1rem; }
+  .star { color: var(--coral); margin-left: 0.3em; }
+  .legend { font-family: var(--sans); font-size: 0.76rem; color: var(--ink-soft); margin-top: 1rem; }
+  .signature { text-align: right; font-family: var(--display); color: var(--maroon); }
+  .text { padding: 2.2rem 0 1rem; border-top: 1px solid var(--line); scroll-margin-top: calc(var(--header-h) + 12px); max-width: 640px; margin-inline: auto; }
+  .text--bi { max-width: none; }
+  .text__title { font-family: var(--display); color: var(--maroon); font-size: clamp(1.4rem, 1vw + 1rem, 1.9rem); margin: 0; }
+  .text__sub { font-style: italic; color: var(--ink-soft); margin: 0.2rem 0 1rem; }
+  .stanza { margin-bottom: 1.1rem; }
+  .line { margin: 0; line-height: 1.5; }
+  .text--bi .line { display: grid; grid-template-columns: 1fr 1fr; gap: 0 2rem; }
+  .text--bi .t { font-style: italic; color: var(--ink-soft); }
+  @media (max-width: 680px) {
+    .text--bi .line { grid-template-columns: 1fr; margin-bottom: 0.35rem; }
+    .text--bi .t { font-size: 0.92em; }
+  }
+  .bk-end { margin: 2rem auto 0; width: 90px; }
+  .cast { list-style: none; padding: 0; margin: 1rem 0 0; }
+  .cast li { padding: 0.3rem 0; }
+  .cast__role { font-family: var(--sans); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-ink); margin-right: 0.4rem; }
+  .cast a { font-weight: 600; text-decoration: none; }
+</style>

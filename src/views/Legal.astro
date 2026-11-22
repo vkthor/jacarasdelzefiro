@@ -1,0 +1,69 @@
+---
+// Aviso legal (LSSI) y política de privacidad. La web no usa cookies ni analítica.
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { site } from '../data/site';
+import { tr, type Lang } from '../i18n';
+
+interface Props { lang: Lang; kind: 'legal' | 'privacy' }
+const { lang, kind } = Astro.props;
+const o = site.owner;
+const title = kind === 'legal'
+  ? { es: 'Aviso legal', en: 'Legal notice' }
+  : { es: 'Privacidad y cookies', en: 'Privacy and cookies' };
+---
+<Base lang={lang} route={kind} title={tr(title, lang)} description={tr(title, lang)}>
+  <PageHead title={tr(title, lang)} />
+  <section class="section section--tight">
+    <div class="wrap narrow prose">
+      {kind === 'legal' && lang === 'es' && (
+        <>
+          <p>En cumplimiento de la Ley 34/2002, de servicios de la sociedad de la información y de comercio electrónico (LSSI), se informa de que el titular de este sitio web, <strong>{site.domain}</strong>, es:</p>
+          <ul>
+            <li>Titular: {o.name}</li>
+            <li>NIF: {o.nif}</li>
+            <li>Correo electrónico: <a href={`mailto:${o.email}`}>{o.email}</a></li>
+          </ul>
+          <h3>Propiedad intelectual</h3>
+          <p>Los textos, fotografías, vídeos, logotipos y demás contenidos de esta web pertenecen a Jácaras del Zéfiro o a sus autores, citados en cada caso, y no pueden reproducirse sin permiso, salvo los materiales del kit de prensa para la difusión de nuestros conciertos. Las transcripciones de la sección de partituras pueden usarse libremente para estudio e interpretación sin fines comerciales, citando su autoría. Las críticas y artículos de prensa citados pertenecen a sus medios y autores.</p>
+          <h3>Enlaces</h3>
+          <p>Esta web enlaza con páginas de terceros (medios, festivales, redes sociales) sobre cuyos contenidos no tenemos control ni responsabilidad.</p>
+        </>
+      )}
+      {kind === 'legal' && lang === 'en' && (
+        <>
+          <p>In accordance with Spanish Law 34/2002 on information society services and e-commerce (LSSI), the owner of this website, <strong>{site.domain}</strong>, is:</p>
+          <ul>
+            <li>Owner: {o.name}</li>
+            <li>Tax ID (NIF): {o.nif}</li>
+            <li>Email: <a href={`mailto:${o.email}`}>{o.email}</a></li>
+          </ul>
+          <h3>Intellectual property</h3>
+          <p>The texts, photographs, videos, logos and other contents of this website belong to Jácaras del Zéfiro or to their authors, credited in each case, and may not be reproduced without permission, except for the press kit materials used to promote our concerts. The transcriptions in the scores section may be used freely for study and performance for non-commercial purposes, crediting their authors. Quoted reviews and press articles belong to their publications and authors.</p>
+          <h3>Links</h3>
+          <p>This website links to third-party pages (media, festivals, social networks) whose contents we neither control nor are responsible for.</p>
+        </>
+      )}
+      {kind === 'privacy' && lang === 'es' && (
+        <>
+          <h3>Sin cookies ni seguimiento</h3>
+          <p>Esta web no usa cookies, ni herramientas de analítica, ni publicidad. Las tipografías se sirven desde nuestro propio servidor.</p>
+          <h3>Vídeos</h3>
+          <p>Los vídeos de YouTube no se cargan hasta que pulsas el botón de reproducir. A partir de ese momento se cargan desde youtube-nocookie.com, y YouTube (Google) puede tratar datos según su propia política de privacidad.</p>
+          <h3>Si nos escribes</h3>
+          <p>Si nos escribes por correo electrónico, usaremos tus datos sólo para responderte y gestionar lo que nos pidas, y no los cederemos a nadie. El responsable es {o.name} ({o.email}). Puedes pedir en cualquier momento acceder a tus datos, rectificarlos o suprimirlos escribiendo a esa dirección, y, si lo consideras necesario, reclamar ante la Agencia Española de Protección de Datos (aepd.es).</p>
+        </>
+      )}
+      {kind === 'privacy' && lang === 'en' && (
+        <>
+          <h3>No cookies, no tracking</h3>
+          <p>This website uses no cookies, analytics or advertising. Fonts are served from our own server.</p>
+          <h3>Videos</h3>
+          <p>YouTube videos are not loaded until you press play. From then on they load from youtube-nocookie.com, and YouTube (Google) may process data under its own privacy policy.</p>
+          <h3>If you write to us</h3>
+          <p>If you email us, we will use your data only to reply and handle your request, and will not share it with anyone. The data controller is {o.name} ({o.email}). You may ask at any time to access, correct or delete your data by writing to that address, and, if you deem it necessary, lodge a complaint with the Spanish Data Protection Agency (aepd.es).</p>
+        </>
+      )}
+    </div>
+  </section>
+</Base>

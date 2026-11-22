@@ -1,0 +1,13 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import golondrina from '../assets/graficos/ave-golondrina-1.webp';
+---
+<Base lang="es" route="home" title="Página no encontrada" description="Esta página no existe.">
+  <PageHead title="Este pájaro ha volado" lead="La página que buscas no existe o ha cambiado de sitio. / This page has flown away." bird={golondrina}>
+    <div class="btn-row" style="justify-content:center;margin-top:1.5rem">
+      <a class="btn btn--solid" href="/">Inicio</a>
+      <a class="btn" href="/en/">Home (English)</a>
+    </div>
+  </PageHead>
+</Base>

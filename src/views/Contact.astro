@@ -1,0 +1,69 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { site } from '../data/site';
+import { tr, url, type Lang } from '../i18n';
+import azulejo from '../assets/graficos/ave-azulejo-rama.webp';
+import gato from '../assets/logo/gato.png';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = {
+  title: { es: 'Contacto', en: 'Contact' },
+  lead: { es: 'Escríbenos para contratar un concierto, pedir material o simplemente saludarnos.', en: 'Write to us to book a concert, request materials or just say hello.' },
+  description: { es: 'Contacto de Jácaras del Zéfiro para programadores, prensa y público.', en: 'Contact Jácaras del Zéfiro: for programmers, press and audiences.' },
+  write: { es: 'Escríbenos', en: 'Write to us' },
+  director: { es: 'Dirección artística', en: 'Artistic director' },
+  follow: { es: 'Síguenos', en: 'Follow us' },
+  tech: { es: 'Ficha técnica', en: 'Technical rider' },
+  techList: {
+    es: [
+      'Un espacio con buena acústica para música sin amplificar: iglesia, auditorio o sala de cámara.',
+      'Seis atriles de bandeja (no de varillas), cuatro luces de atril y siete sillas sin brazos.',
+      'Cada músico lleva sus instrumentos.',
+      'Un ensayo con prueba acústica en el mismo espacio el día del concierto (hasta tres horas).',
+      'Concierto sin micrófonos; sólo uno, si hace falta, para las breves presentaciones habladas.',
+    ],
+    en: [
+      'A space with good acoustics for unamplified music: church, auditorium or chamber hall.',
+      'Six solid-desk music stands (not wire ones), four stand lights and seven armless chairs.',
+      'Each musician brings their own instruments.',
+      'A rehearsal and sound check in the venue on the day of the concert (up to three hours).',
+      'No microphones needed, except one for short spoken introductions if the space requires it.',
+    ],
+  },
+};
+---
+<Base lang={lang} route="contact" title={tr(t.title, lang)} description={tr(t.description, lang)}>
+  <PageHead kicker="Jácaras del Zéfiro" title={tr(t.title, lang)} lead={tr(t.lead, lang)} bird={azulejo} />
+  <section class="section">
+    <div class="wrap contact-grid">
+      <div>
+        <p class="kicker">{tr(t.write, lang)}</p>
+        <p class="big-mail"><a href={`mailto:${site.email}`}>{site.email}</a></p>
+        <p class="kicker" style="margin-top:2rem">{tr(t.director, lang)}</p>
+        <p>Víctor Cruz · <a href={site.directorSite} rel="noopener">victorcruz.es</a></p>
+        <p class="kicker" style="margin-top:2rem">{tr(t.follow, lang)}</p>
+        <p><a href={site.instagram} rel="noopener">Instagram {site.instagramHandle}</a><br /><a href={site.youtube} rel="noopener">YouTube</a></p>
+      </div>
+      <div class="tech">
+        <h2 class="title-section">{tr(t.tech, lang)}</h2>
+        <ul>{t.techList[lang].map((li) => <li>{li}</li>)}</ul>
+        <p class="note">{lang === 'es' ? 'Dossieres y fotos en alta resolución, en la página de' : 'Press kits and high-resolution photos on the'} <a href={`${url('press', lang)}#kit`}>{lang === 'es' ? 'prensa' : 'press page'}</a>.</p>
+        <Image src={gato} alt="" width={120} class="tech__cat" />
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .contact-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: clamp(32px, 6vw, 96px); align-items: start; }
+  @media (max-width: 860px) { .contact-grid { grid-template-columns: 1fr; } }
+  .big-mail { font-family: var(--display); font-size: clamp(1.3rem, 2vw + 0.8rem, 2.2rem); word-break: break-word; }
+  .big-mail a { text-decoration: none; }
+  .tech { background: var(--paper-warm); border: 1px solid var(--line); padding: clamp(24px, 3vw, 40px); position: relative; }
+  .tech ul { padding-left: 1.1rem; }
+  .tech li { margin-bottom: 0.5rem; }
+  .tech :global(.tech__cat) { position: absolute; right: 16px; bottom: 12px; width: 70px; opacity: 0.85; }
+</style>

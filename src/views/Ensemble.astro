@@ -1,0 +1,164 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Dropcap from '../components/Dropcap.astro';
+import PageHead from '../components/PageHead.astro';
+import Portrait from '../components/Portrait.astro';
+import { musicians } from '../data/musicians';
+import { tr, url, type Lang } from '../i18n';
+import { inline } from '../utils';
+import playa2 from '../assets/fotos/playa-2.jpg';
+import gato from '../assets/logo/gato.png';
+import golondrina from '../assets/graficos/ave-golondrina-2.webp';
+import trepador from '../assets/graficos/ave-trepador.webp';
+import carrizo from '../assets/graficos/ave-carrizo.webp';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+
+const t = {
+  title: { es: 'El grupo', en: 'The ensemble' },
+  description: {
+    es: 'Quiénes somos, cómo trabajamos y de dónde viene nuestro nombre. Biografías de los seis músicos de Jácaras del Zéfiro.',
+    en: 'Who we are, how we work and where our name comes from. Biographies of the six musicians of Jácaras del Zéfiro.',
+  },
+  lead: {
+    es: 'Seis músicos que cantan y tocan a la vez para devolver al barroco hispano su ímpetu, su danza y su capacidad de conmover.',
+    en: 'Six musicians who sing and play at the same time to give the Hispanic Baroque back its drive, its dance and its power to move.',
+  },
+  who: { es: 'Quiénes somos', en: 'Who we are' },
+  who1: {
+    es: 'Fundado por el barítono Víctor Cruz, Jácaras del Zéfiro propone una visión de la música historicista donde conviven la investigación y el instinto. El objetivo es ir más allá de la mera reconstrucción arqueológica para recuperar el pulso real de las obras: su ímpetu, su danza y su capacidad de conmover.',
+    en: 'Founded by baritone Víctor Cruz, Jácaras del Zéfiro offers a vision of historically informed performance in which research and instinct go hand in hand. The aim is to go beyond mere archaeological reconstruction and recover the true pulse of the works: their drive, their dance and their power to move.',
+  },
+  who2: {
+    es: 'El ensemble combina voces, cuerda pulsada, viola da gamba y percusión, integrando a intérpretes de sólida carrera que entienden la música antigua no como piezas de museo, sino como un lenguaje vibrante que requiere conocimiento, pero también viveza y carácter. Se presentó en diciembre de 2025 en el ciclo Música en Adviento de la Junta de Andalucía y, desde entonces, ha actuado en el Festival Internacional de Arte Sacro de Madrid, en Guadix Clásica y en el Festival de Música Española de Cádiz.',
+    en: 'The ensemble combines voices, plucked strings, viola da gamba and percussion, bringing together performers with solid careers who see early music not as museum pieces but as a vibrant language that demands knowledge, but also liveliness and character. It made its debut in December 2025 at the Junta de Andalucía’s Música en Adviento series and has since performed at the Madrid International Festival of Sacred Art, Guadix Clásica and the Cádiz Festival of Spanish Music.',
+  },
+  how: { es: 'Cómo trabajamos', en: 'How we work' },
+  how1: {
+    es: 'Trabajamos desde la retórica de los afectos para ofrecer una interpretación con la intensidad y el carácter que el barroco hispano requiere. Durante décadas, mucha música española se ha interpretado con un filtro estético que no le es propio, más rígido y más frío, heredado de las lecturas del norte de Europa. Nuestro trabajo es devolverle ritmo, acento, fisicidad y palabra: cosas que están en las fuentes y en el propio idioma.',
+    en: 'We work from the rhetoric of the affections to offer performances with the intensity and character that the Hispanic Baroque demands. For decades, much Spanish music has been played through an aesthetic filter that is not its own —stiffer and cooler, inherited from Northern European readings. Our job is to give it back its rhythm, accent, physicality and word: things that are in the sources and in the language itself.',
+  },
+  how2: {
+    es: 'No buscamos voces blancas o asépticas, sino voces con historia, capaces de decir el texto y sostener el gesto musical. Cinco de los seis músicos son a la vez cantantes e instrumentistas: las voces tocan la percusión y la cuerda, y la viola da gamba también canta. Esa doble función da a los conciertos una energía muy particular, cohesionada y teatral.',
+    en: 'We are not after pale or antiseptic voices, but voices with a story, able to speak the text and carry the musical gesture. Five of the six musicians are both singers and instrumentalists: the voices play percussion and strings, and the viola da gamba also sings. That double role gives our concerts a very particular energy, cohesive and theatrical.',
+  },
+  archive: { es: 'Del archivo al escenario', en: 'From the archive to the stage' },
+  archive1: {
+    es: 'Buena parte de nuestro repertorio llevaba siglos sin sonar. Buscamos en los catálogos de los archivos catedralicios, damos con los manuscritos, interpretamos el texto y los transcribimos a notación moderna; varias de las obras que cantamos las ha transcrito el propio Víctor Cruz, a veces junto a Jorge Enrique García. Así hemos recuperado música de Barcelona, Burgos, Canet de Mar o Guatemala, y trabajamos ya en fondos de Granada y Guadix.',
+    en: 'Much of our repertoire had not been heard for centuries. We search the catalogues of cathedral archives, track down the manuscripts, interpret the text and transcribe them into modern notation; several of the works we sing were transcribed by Víctor Cruz himself, sometimes together with Jorge Enrique García. In this way we have recovered music from Barcelona, Burgos, Canet de Mar and Guatemala, and are now working on collections in Granada and Guadix.',
+  },
+  archive2: {
+    es: 'Nada de esto sería posible sin los musicólogos que nos preceden y nos acompañan: Eduardo López Banzo, Mariano Lambea, Lola Josa, Raúl Angulo, Nancho Álvarez, Omar Morales, Roberto Alonso o Iolanda Serrano. Y como el patrimonio es de todos, compartimos nuestras transcripciones para que cualquiera pueda estudiarlas y cantarlas.',
+    en: 'None of this would be possible without the musicologists who came before us and walk alongside us: Eduardo López Banzo, Mariano Lambea, Lola Josa, Raúl Angulo, Nancho Álvarez, Omar Morales, Roberto Alonso and Iolanda Serrano. And because heritage belongs to everyone, we share our transcriptions so that anyone can study and sing them.',
+  },
+  scoresLink: { es: 'Descarga nuestras partituras', en: 'Download our scores' },
+  name: { es: 'El nombre', en: 'The name' },
+  name1: {
+    es: '**Jácaras**, porque la jácara es uno de los géneros más genuinamente españoles del Siglo de Oro: un romance de pícaros y valentones que se cantaba y se bailaba entre las jornadas de las comedias y que acabó colándose, «a lo divino», en los villancicos de las catedrales. En nuestros programas suena alguna, como *Vaya, pues, rompiendo el aire*, de Sebastián Durón.',
+    en: '**Jácaras**, because the jácara is one of the most genuinely Spanish genres of the Golden Age: a ballad of rogues and swaggerers that was sung and danced between the acts of plays, and that eventually slipped, “a lo divino”, into the villancicos of the cathedrals. Our programs include some, such as Sebastián Durón’s *Vaya, pues, rompiendo el aire*.',
+  },
+  name2: {
+    es: '**Zéfiro**, por el viento suave de poniente que trae de vuelta la primavera, las flores y el canto de los pájaros: «Zefiro torna», escribió Petrarca, y Monteverdi lo puso en música. Y también, por qué no decirlo, porque así se llamaba el gato de Víctor, que desde entonces nos vigila desde el logo, envuelto en un soplo de viento.',
+    en: '**Zéfiro**, after the gentle west wind that brings back spring, flowers and birdsong: “Zefiro torna”, wrote Petrarch, and Monteverdi set it to music. And also, we must confess, because that was the name of Víctor’s cat, who has watched over us ever since from our logo, wrapped in a gust of wind.',
+  },
+  musicians: { es: 'Los músicos', en: 'The musicians' },
+  draftNote: {
+    es: 'Fotos: retratos cedidos por cada músico. Foto de grupo en Almuñécar: Domingo Campillo.',
+    en: 'Photos: portraits courtesy of each musician. Group photo in Almuñécar: Domingo Campillo.',
+  },
+};
+---
+<Base lang={lang} route="ensemble" title={tr(t.title, lang)} description={tr(t.description, lang)} image={playa2}>
+  <PageHead kicker="Jácaras del Zéfiro" title={tr(t.title, lang)} lead={tr(t.lead, lang)} bird={golondrina} />
+
+  <section class="section">
+    <div class="wrap grid-2 two-col">
+      <div class="prose">
+        <h2 class="title-section">{tr(t.who, lang)}</h2>
+        <Dropcap text={tr(t.who1, lang)} />
+        <p>{tr(t.who2, lang)}</p>
+      </div>
+      <div class="prose">
+        <h2 class="title-section">{tr(t.how, lang)}</h2>
+        <p>{tr(t.how1, lang)}</p>
+        <p>{tr(t.how2, lang)}</p>
+      </div>
+    </div>
+  </section>
+
+  <figure class="wide-photo">
+    <Image src={playa2} alt={lang === 'es' ? 'Los músicos de Jácaras del Zéfiro charlan en la orilla con sus instrumentos' : 'The musicians of Jácaras del Zéfiro chatting on the shore with their instruments'} widths={[800, 1400, 2200]} sizes="100vw" format="webp" quality={76} />
+  </figure>
+  <div class="torn" aria-hidden="true"></div>
+
+  <section class="section linen">
+    <Image src={trepador} alt="" width={180} class="bird archive__bird bird--hide-sm" />
+    <div class="wrap narrow prose archive">
+      <p class="kicker">{lang === 'es' ? 'Patrimonio' : 'Heritage'}</p>
+      <h2 class="title-section">{tr(t.archive, lang)}</h2>
+      <p>{tr(t.archive1, lang)}</p>
+      <p>{tr(t.archive2, lang)}</p>
+      <p><a class="btn" href={url('scores', lang)}>{tr(t.scoresLink, lang)}</a></p>
+    </div>
+  </section>
+
+  <section class="section name">
+    <div class="wrap name__grid">
+      <Image src={gato} alt={lang === 'es' ? 'Logotipo: un gato atigrado entre volutas de viento' : 'Logo: a tabby cat amid swirls of wind'} width={300} class="name__cat" />
+      <div class="prose">
+        <p class="kicker">{tr(t.name, lang)}</p>
+        <h2 class="title-section">Jácaras del Zéfiro</h2>
+        <p set:html={inline(tr(t.name1, lang))} />
+        <p set:html={inline(tr(t.name2, lang))} />
+      </div>
+    </div>
+  </section>
+
+  <section class="section bios-section" id="musicos">
+    <div class="wrap">
+      <div class="center">
+        <p class="kicker">{tr(t.musicians, lang)}</p>
+        <span class="ornament" aria-hidden="true"></span>
+      </div>
+      <div class="bios">
+        {musicians.map((m) => (
+          <article class="bio" id={m.id}>
+            <Portrait src={m.photo} alt={m.name} size={190} />
+            <div>
+              <p class="bio__role">{tr(m.role, lang)}</p>
+              <h3 class="bio__name">{m.name}</h3>
+              {m.bio[lang].map((p) => <p set:html={inline(p)} />)}
+              <p class="caption">{lang === 'es' ? 'Foto' : 'Photo'}: {m.credit}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+      <Image src={carrizo} alt="" width={150} class="bios__bird" />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .two-col { align-items: start; }
+  .wide-photo :global(img) { width: 100%; height: clamp(280px, 52vw, 720px); object-fit: cover; object-position: 50% 62%; }
+  .archive { position: relative; z-index: 2; }
+  .linen :global(.archive__bird) { right: max(2vw, calc(50% - 600px)); top: 10%; width: clamp(110px, 12vw, 180px); }
+  .name__grid { display: grid; grid-template-columns: 0.8fr 1.4fr; gap: clamp(32px, 6vw, 80px); align-items: center; }
+  .name__grid :global(.name__cat) { width: min(300px, 100%); justify-self: center; filter: drop-shadow(0 18px 24px rgba(60, 35, 20, 0.18)); }
+  @media (max-width: 760px) { .name__grid { grid-template-columns: 1fr; } .name__grid :global(.name__cat) { width: 200px; } }
+  .bios { display: grid; gap: clamp(40px, 6vw, 72px); margin-top: 2rem; }
+  .bio { display: grid; grid-template-columns: 200px 1fr; gap: clamp(24px, 4vw, 48px); align-items: start; scroll-margin-top: calc(var(--header-h) + 24px); }
+  .bio:nth-child(even) { grid-template-columns: 1fr 200px; }
+  .bio:nth-child(even) > :global(.ring) { order: 2; }
+  .bio__role { font-family: var(--sans); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-ink); margin: 0.6rem 0 0.2rem; }
+  .bio__name { font-family: var(--display); font-weight: 500; color: var(--maroon); font-size: clamp(1.6rem, 1.5vw + 1rem, 2.2rem); }
+  .bio p { hyphens: auto; }
+  @media (max-width: 760px) {
+    .bio, .bio:nth-child(even) { grid-template-columns: 1fr; text-align: left; }
+    .bio > :global(.ring), .bio:nth-child(even) > :global(.ring) { order: 0; width: 170px; }
+  }
+  .bios-section { position: relative; background: var(--paper-warm); }
+  .bios-section :global(.bios__bird) { margin: 2rem auto 0; width: 130px; }
+</style>

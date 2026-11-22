@@ -1,0 +1,26 @@
+---
+// Cabecera de página interior: lienzo, rótulo, título y entradilla, con un pájaro.
+import { Image } from 'astro:assets';
+interface Props { kicker?: string; title: string; lead?: string; bird?: ImageMetadata; birdSide?: 'left' | 'right' }
+const { kicker, title, lead, bird, birdSide = 'right' } = Astro.props;
+---
+<header class="page-head linen">
+  {bird && <Image src={bird} alt="" width={170} class:list={['bird', 'page-head__bird', `page-head__bird--${birdSide}`]} loading="eager" />}
+  <div class="wrap narrow center page-head__inner">
+    {kicker && <p class="kicker">{kicker}</p>}
+    <h1 class="title-display">{title}</h1>
+    {lead && <p class="lead">{lead}</p>}
+    <slot />
+  </div>
+</header>
+<div class="torn" aria-hidden="true"></div>
+
+<style>
+  .page-head { position: relative; padding: clamp(56px, 8vw, 104px) 0 clamp(48px, 7vw, 88px); overflow: hidden; }
+  .page-head__inner { position: relative; z-index: 2; margin-inline: auto; }
+  .page-head .lead { margin: 1rem auto 0; max-width: 46ch; }
+  .page-head :global(.page-head__bird) { top: 18%; width: clamp(80px, 11vw, 170px); }
+  .page-head :global(.page-head__bird--right) { right: max(3vw, calc(50% - 560px)); }
+  .page-head :global(.page-head__bird--left) { left: max(3vw, calc(50% - 560px)); transform: scaleX(-1); }
+  @media (max-width: 760px) { .page-head :global(.page-head__bird) { top: 8px; width: 70px; opacity: 0.9; } }
+</style>

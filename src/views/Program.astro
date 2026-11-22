@@ -1,0 +1,182 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Dropcap from '../components/Dropcap.astro';
+import VideoEmbed from '../components/VideoEmbed.astro';
+import WorkList from '../components/WorkList.astro';
+import { programs, type ProgramKey } from '../data/programs';
+import { reviews } from '../data/press';
+import { videos } from '../data/site';
+import { tr, ui, url, type Lang } from '../i18n';
+import { inline, plain } from '../utils';
+
+import posterBatalla from '../assets/fotos/video-batalla.jpg';
+import posterTeaser from '../assets/fotos/almunecar-concierto-1.jpg';
+import fotoAvecillas from '../assets/fotos/fias-percusion.jpg';
+import fotoNavidad from '../assets/fotos/almunecar-gamba.jpg';
+import azulejo from '../assets/graficos/ave-azulejo-rama.webp';
+import petirrojo1 from '../assets/graficos/ave-petirrojo-1.webp';
+import petirrojo2 from '../assets/graficos/ave-petirrojo-2.webp';
+import grabado from '../assets/graficos/grabado-bailarines.webp';
+import pareja from '../assets/graficos/pareja-pandero.webp';
+import golondrina from '../assets/graficos/ave-golondrina-1.webp';
+
+interface Props { lang: Lang; program: ProgramKey }
+const { lang, program } = Astro.props;
+const p = programs[program];
+const isAvec = program === 'avecillas';
+const video = videos[p.video];
+const poster = isAvec ? posterBatalla : posterTeaser;
+const photo = isAvec ? fotoAvecillas : fotoNavidad;
+const review = isAvec ? reviews[0] : reviews[1];
+
+const t = {
+  program: { es: 'El programa', en: 'The program' },
+  works: { es: 'Programa', en: 'Program' },
+  listen: { es: 'Escúchalo', en: 'Listen' },
+  press: { es: 'Dijeron de nosotros', en: 'What they said' },
+  bookletText: {
+    es: 'Notas al programa y todos los textos cantados, para leer antes o durante el concierto.',
+    en: 'Program notes and all the sung texts with English translations, to read before or during the concert.',
+  },
+  materials: { es: 'Para programadores', en: 'For programmers' },
+  materialsText: {
+    es: 'Descarga el dossier o escríbenos y te enviamos la ficha técnica y las condiciones.',
+    en: 'Download the press kit or write to us for the technical rider and terms.',
+  },
+  route: isAvec ? 'avecillas' as const : 'navidad' as const,
+};
+const description = `${p.title}. ${tr(p.subtitle, lang)}. ${tr(p.lead, lang)}`;
+---
+<Base lang={lang} route={t.route} title={p.title} description={plain(description)} image={photo}>
+  <header class:list={['program-hero', 'linen', isAvec ? 'program-hero--avecillas' : 'program-hero--navidad']}>
+    {isAvec ? (
+      <>
+        <Image src={azulejo} alt="" width={260} class="bird ph-bird ph-bird--a" loading="eager" />
+        <Image src={petirrojo2} alt="" width={120} class="bird ph-bird ph-bird--b bird--hide-sm" loading="eager" />
+        <Image src={golondrina} alt="" width={120} class="bird ph-bird ph-bird--c bird--hide-sm" loading="eager" />
+      </>
+    ) : (
+      <>
+        <Image src={grabado} alt="" width={700} class="ph-engraving" loading="eager" />
+        <Image src={pareja} alt="" width={170} class="bird ph-bird ph-bird--d bird--hide-sm" loading="eager" />
+      </>
+    )}
+    <div class="wrap program-hero__inner">
+      <p class="kicker"><a href={url('programs', lang)}>{tr(ui.nav.programs, lang)}</a> · Jácaras del Zéfiro</p>
+      <h1 class="title-program">{p.title}</h1>
+      <p class="subtitle-spaced">{tr(p.subtitle, lang)}</p>
+      <p class="lead">{tr(p.lead, lang)}</p>
+      <div class="btn-row">
+        <a class="btn btn--solid" href="#programa">{tr(t.works, lang)}</a>
+        <a class="btn" href={url(p.bookletKey, lang)}>{tr(ui.booklet, lang)}</a>
+        <a class="btn" href={p.dossier[lang]} download>{tr(ui.dossier, lang)}</a>
+      </div>
+    </div>
+  </header>
+  <div class="torn" aria-hidden="true"></div>
+
+  <section class="section">
+    <div class="wrap program-body">
+      <div class="prose">
+        <p class="kicker">{tr(t.program, lang)}</p>
+        {p.body[lang].map((para, i) => i === 0 ? <Dropcap text={para} /> : <p set:html={inline(para)} />)}
+      </div>
+      <dl class="facts facts--stack">
+        {p.facts.map((f) => (
+          <div><dt>{tr(f.label, lang)}</dt><dd>{tr(f.value, lang)}</dd></div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <figure class="program-photo">
+    <Image src={photo} alt="" widths={[800, 1400, 2000]} sizes="100vw" format="webp" quality={76} />
+  </figure>
+
+  <section class="section" id="programa">
+    <div class="wrap">
+      <div class="center">
+        <p class="kicker">{tr(t.works, lang)}</p>
+        <h2 class="title-section">{p.title}</h2>
+        <span class="ornament" aria-hidden="true"></span>
+      </div>
+      <WorkList works={p.works} lang={lang} />
+      <div class="booklet-box">
+        <Image src={petirrojo1} alt="" width={90} class="booklet-box__bird" />
+        <div>
+          <h3>{tr(ui.booklet, lang)}</h3>
+          <p>{tr(t.bookletText, lang)}</p>
+        </div>
+        <a class="btn btn--solid" href={url(p.bookletKey, lang)}>{tr(ui.bookletLong, lang)}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section night">
+    <div class="wrap" style="max-width: 980px">
+      <p class="kicker center">{tr(t.listen, lang)}</p>
+      <h2 class="title-section center" style="margin-bottom: 1.5rem">{tr(video.title, lang)}</h2>
+      <VideoEmbed id={video.id} title={tr(video.title, lang)} poster={poster} lang={lang} vertical={!isAvec} />
+      <p class="caption center" style="color:#cdbfa9; max-width:70ch; margin-inline:auto">{tr(video.caption, lang)}</p>
+    </div>
+  </section>
+
+  <section class="section linen-light">
+    <div class="wrap narrow center">
+      <p class="kicker">{tr(t.press, lang)}</p>
+      <blockquote class="pq">
+        <p class="pq__head">«{review.headline}»</p>
+        <p class="pq__body">«{review.quote}»</p>
+      </blockquote>
+      <p class="caption"><strong>{review.outlet}</strong> · {review.author} · <span set:html={inline(tr(review.context, lang))} /> <a href={review.url} rel="noopener">{tr(ui.readReview, lang)}</a></p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap narrow center">
+      <p class="kicker">{tr(t.materials, lang)}</p>
+      <p>{tr(t.materialsText, lang)}</p>
+      <div class="btn-row" style="justify-content:center">
+        <a class="btn btn--solid" href={p.dossier[lang]} download>{tr(ui.dossier, lang)}</a>
+        {lang === 'en' && <a class="btn" href={p.dossier.es} download>Dossier (ES)</a>}
+        <a class="btn" href={url('contact', lang)}>{tr(ui.writeUs, lang)}</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .program-hero { position: relative; overflow: hidden; padding: clamp(56px, 8vw, 110px) 0 clamp(56px, 8vw, 96px); }
+  .program-hero__inner { position: relative; z-index: 2; }
+  .program-hero .lead { max-width: 40ch; margin-top: 1.4rem; }
+  .program-hero .btn-row { margin-top: 1.8rem; }
+  .program-hero .kicker a { color: inherit; text-decoration: none; }
+  .program-hero :global(.ph-bird--a) { right: max(2vw, calc(50% - 600px)); top: 8%; width: clamp(150px, 22vw, 300px); }
+  .program-hero :global(.ph-bird--b) { right: max(24vw, calc(50% - 160px)); bottom: 10%; width: clamp(70px, 8vw, 110px); }
+  .program-hero :global(.ph-bird--c) { right: max(30vw, calc(50% - 60px)); top: 10%; width: clamp(70px, 8vw, 110px); transform: rotate(-12deg); }
+  .program-hero--navidad :global(.ph-engraving) {
+    position: absolute; right: 0; top: 0; height: 100%; width: auto; max-width: 52%; object-fit: cover; object-position: left center;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 30%); mask-image: linear-gradient(to right, transparent, #000 30%); opacity: 0.92;
+  }
+  .program-hero :global(.ph-bird--d) { left: 52%; bottom: 0; width: clamp(90px, 10vw, 150px); }
+  @media (max-width: 860px) {
+    .program-hero--navidad :global(.ph-engraving) { position: relative; max-width: 100%; width: 100%; height: 220px; margin-top: -40px; mask-image: linear-gradient(to bottom, transparent, #000 30%); -webkit-mask-image: linear-gradient(to bottom, transparent, #000 30%); }
+    .program-hero :global(.ph-bird--a) { top: auto; bottom: 0; right: 0; opacity: 0.85; width: 130px; }
+  }
+  .program-body { display: grid; grid-template-columns: 1.5fr 1fr; gap: clamp(32px, 5vw, 72px); align-items: start; }
+  .facts--stack { grid-template-columns: 1fr; }
+  @media (max-width: 860px) { .program-body { grid-template-columns: 1fr; } }
+  .program-photo :global(img) { width: 100%; height: clamp(260px, 45vw, 620px); object-fit: cover; }
+  .booklet-box {
+    display: grid; grid-template-columns: auto 1fr auto; gap: 1.5rem; align-items: center; margin-top: 3rem; padding: 1.4rem 1.8rem;
+    background: var(--paper-warm); border: 1px solid var(--line);
+  }
+  .booklet-box h3 { font-family: var(--display); color: var(--maroon); margin: 0 0 0.2rem; font-size: 1.4rem; }
+  .booklet-box p { margin: 0; color: var(--ink-soft); }
+  .booklet-box :global(.booklet-box__bird) { width: 70px; }
+  @media (max-width: 760px) { .booklet-box { grid-template-columns: 1fr; text-align: center; } .booklet-box :global(.booklet-box__bird) { margin-inline: auto; } }
+  .pq { margin: 0 0 1rem; }
+  .pq__head { font-family: var(--display); color: var(--maroon); font-size: clamp(1.5rem, 1.6vw + 1rem, 2.3rem); line-height: 1.25; }
+  .pq__body { font-style: italic; font-size: 1.25rem; color: var(--ink-soft); }
+</style>

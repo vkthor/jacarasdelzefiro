@@ -1,0 +1,54 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo/logo.png';
+import { site } from '../data/site';
+import { nav, tr, ui, url, type Lang } from '../i18n';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const year = new Date().getFullYear();
+---
+<footer class="site-footer night">
+  <div class="torn torn--footer" aria-hidden="true"></div>
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
+      <Image src={logo} alt={tr(ui.siteName, lang)} width={150} height={150} class="footer-logo" />
+      <p class="motto">{tr(ui.tagline, lang)}.<br />{tr(ui.motto, lang)}</p>
+    </div>
+    <div>
+      <p class="kicker">{tr(ui.nav.contact, lang)}</p>
+      <p><a href={`mailto:${site.email}`}>{site.email}</a></p>
+      <p>
+        <a href={site.instagram} rel="noopener">Instagram {site.instagramHandle}</a><br />
+        <a href={site.youtube} rel="noopener">YouTube</a>
+      </p>
+      <p class="small">{lang === 'es' ? 'Dirección artística:' : 'Artistic director:'} <a href={site.directorSite} rel="noopener">Víctor Cruz</a></p>
+    </div>
+    <nav aria-label={lang === 'es' ? 'Secciones' : 'Sections'}>
+      <p class="kicker">{lang === 'es' ? 'Secciones' : 'Sections'}</p>
+      <ul>
+        {nav.map((key) => <li><a href={url(key, lang)}>{tr(ui.nav[key], lang)}</a></li>)}
+      </ul>
+    </nav>
+  </div>
+  <div class="wrap footer-bottom">
+    <span>© {year} Jácaras del Zéfiro</span>
+    <span><a href={url('legal', lang)}>{tr(ui.nav.legal, lang)}</a> · <a href={url('privacy', lang)}>{tr(ui.nav.privacy, lang)}</a></span>
+  </div>
+</footer>
+
+<style>
+  .site-footer { position: relative; padding: clamp(64px, 8vw, 96px) 0 28px; margin-top: 0; }
+  .torn--footer { position: absolute; top: 0; left: 0; right: 0; margin: 0; transform: translateY(-50%) scaleY(-1); }
+  .footer-grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 2.5rem; }
+  .footer-logo { width: 130px; height: auto; filter: brightness(0) invert(0.92) sepia(0.25); opacity: 0.95; margin-bottom: 1rem; }
+  .motto { font-style: italic; font-size: 1.15rem; color: #d9cbb6; }
+  .site-footer ul { list-style: none; margin: 0; padding: 0; columns: 2; column-gap: 1.5rem; }
+  .site-footer li { margin-bottom: 0.35rem; }
+  .site-footer a { text-decoration: none; }
+  .site-footer a:hover { text-decoration: underline; color: #fff; }
+  .small { font-size: 0.95rem; color: #cbbca7; }
+  .footer-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.6rem; margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid rgba(255, 255, 255, 0.12); font-family: var(--sans); font-size: 0.74rem; letter-spacing: 0.06em; color: #b9aa95; }
+  @media (max-width: 860px) { .footer-grid { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } }
+  @media (max-width: 520px) { .footer-grid { grid-template-columns: 1fr; } }
+</style>
