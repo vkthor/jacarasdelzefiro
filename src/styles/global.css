@@ -179,9 +179,13 @@ h1, h2, h3, h4 { margin: 0 0 0.5em; line-height: 1.15; font-weight: 500; text-wr
 .torn {
   position: relative;
   z-index: 2;
-  height: clamp(28px, 4vw, 56px);
-  margin-block: calc(clamp(28px, 4vw, 56px) * -0.5);
-  background: url('/img/papel-rasgado.webp') center / 100% 100% no-repeat;
+  /* La franja de papel sólo es opaca de punta a punta entre el 43 % y el 46 % de su alto:
+     el borde de la foto se coloca ahí (44,5 %) para que el papel lo tape siempre. */
+  --torn-h: clamp(36px, 5.5vw, 84px);
+  height: var(--torn-h);
+  margin-top: calc(var(--torn-h) * -0.445);
+  margin-bottom: calc(var(--torn-h) * -0.555);
+  background: url('/img/papel-rasgado.webp') center / 102% 100% no-repeat;
   filter: drop-shadow(0 3px 4px rgba(60, 35, 20, 0.25));
   pointer-events: none;
 }
