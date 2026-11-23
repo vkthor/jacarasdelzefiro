@@ -2,7 +2,7 @@
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
-import { mentions, reviews } from '../data/press';
+import { mentions, q, reviews } from '../data/press';
 import { formatDate } from '../data/concerts';
 import { imageCredits, photoCredits } from '../data/site';
 import { tr, ui, url, type Lang } from '../i18n';
@@ -52,8 +52,8 @@ const t = {
         {reviews.map((r) => (
           <article class="review">
             <p class="review__meta">{r.outlet} · {formatDate(r.date, lang)}</p>
-            <h3 class="review__head">«{r.headline}»</h3>
-            <blockquote><p>«{r.quote}»</p></blockquote>
+            <h3 class="review__head">{q(tr(r.headline, lang), lang)}</h3>
+            <blockquote><p>{q(tr(r.quote, lang), lang)}</p></blockquote>
             <p class="review__by">{r.author}. <span set:html={inline(tr(r.context, lang))} /></p>
             <a class="btn" href={r.url} rel="noopener">{tr(ui.readReview, lang)}</a>
           </article>

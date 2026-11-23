@@ -1,4 +1,4 @@
-// Críticas y apariciones en prensa. Citas breves y literales, con enlace a la fuente.
+// Críticas y apariciones en prensa. Citas breves y literales (en inglés, traducidas), con enlace a la fuente.
 import type { T } from '../i18n';
 
 export const reviews = [
@@ -6,8 +6,8 @@ export const reviews = [
     outlet: 'Ritmo',
     author: 'Simón Andueza',
     date: '2026-04-09',
-    headline: 'Jácaras del Zéfiro emprende un vuelo esperanzador',
-    quote: 'este formidable programa tan coherente, variado y de una calidad musical tan exquisita',
+    headline: { es: 'Jácaras del Zéfiro emprende un vuelo esperanzador', en: 'Jácaras del Zéfiro takes wing, full of promise' } as T,
+    quote: { es: 'este formidable programa tan coherente, variado y de una calidad musical tan exquisita', en: 'this formidable programme, so coherent, so varied and of such exquisite musical quality' } as T,
     context: {
       es: 'Crítica de *Avecillas* en el Festival Internacional de Arte Sacro de Madrid.',
       en: 'Review of *Avecillas* at the Madrid International Festival of Sacred Art.',
@@ -18,8 +18,8 @@ export const reviews = [
     outlet: 'Granada Hoy',
     author: 'Jorge Rodríguez Morata',
     date: '2025-12-28',
-    headline: 'Brillante estreno de un prometedor ensemble',
-    quote: 'una intensidad vocal poco habitual en la interpretación de este repertorio',
+    headline: { es: 'Brillante estreno de un prometedor ensemble', en: 'A brilliant debut from a promising ensemble' } as T,
+    quote: { es: 'una intensidad vocal poco habitual en la interpretación de este repertorio', en: 'a vocal intensity rarely heard in this repertoire' } as T,
     context: {
       es: 'Crítica del concierto de presentación, con *La gracia y el gozo*, en Almuñécar.',
       en: 'Review of the debut concert, with *La gracia y el gozo*, in Almuñécar.',
@@ -38,3 +38,6 @@ export const mentions: { outlet: string; date: string; what: T; url: string }[] 
   { outlet: 'Scherzo', date: '2026-06-05', what: { es: 'Presentación de la XXXIV edición de Guadix Clásica', en: 'Preview of the 34th Guadix Clásica series' }, url: 'https://scherzo.es/guadix-clasica-presenta-su-xxxiv-edicion-con-manuel-de-falla-y-pedro-antonio-de-alarcon-como-eje-artistico/' },
   { outlet: 'Todalamúsica', date: '2026-10-21', what: { es: 'Presentación del Festival de Cádiz 2026', en: 'Preview of the 2026 Cádiz Festival' }, url: 'https://www.todalamusica.es/el-festival-de-cadiz-2026-reunira-35-conciertos-y-20-estrenos/' },
 ];
+
+// Comillas según el idioma: «…» en español, “…” en inglés.
+export const q = (text: string, lang: string) => (lang === 'en' ? `“${text}”` : `«${text}»`);

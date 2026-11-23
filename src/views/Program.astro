@@ -5,7 +5,7 @@ import Dropcap from '../components/Dropcap.astro';
 import VideoEmbed from '../components/VideoEmbed.astro';
 import WorkList from '../components/WorkList.astro';
 import { programs, type ProgramKey } from '../data/programs';
-import { reviews } from '../data/press';
+import { q, reviews } from '../data/press';
 import { videos } from '../data/site';
 import { tr, ui, url, type Lang } from '../i18n';
 import { inline, plain } from '../utils';
@@ -126,8 +126,8 @@ const description = `${p.title}. ${tr(p.subtitle, lang)}. ${tr(p.lead, lang)}`;
     <div class="wrap narrow center">
       <p class="kicker">{tr(t.press, lang)}</p>
       <blockquote class="pq">
-        <p class="pq__head">«{review.headline}»</p>
-        <p class="pq__body">«{review.quote}»</p>
+        <p class="pq__head">{q(tr(review.headline, lang), lang)}</p>
+        <p class="pq__body">{q(tr(review.quote, lang), lang)}</p>
       </blockquote>
       <p class="caption"><strong>{review.outlet}</strong> · {review.author} · <span set:html={inline(tr(review.context, lang))} /> <a class="tap" href={review.url} rel="noopener">{tr(ui.readReview, lang)}</a></p>
     </div>

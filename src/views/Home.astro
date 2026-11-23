@@ -6,7 +6,7 @@ import Portrait from '../components/Portrait.astro';
 import VideoEmbed from '../components/VideoEmbed.astro';
 import { musicians } from '../data/musicians';
 import { programs } from '../data/programs';
-import { reviews } from '../data/press';
+import { q, reviews } from '../data/press';
 import { videos } from '../data/site';
 import { tr, ui, url, type Lang } from '../i18n';
 import { inline } from '../utils';
@@ -158,8 +158,8 @@ const nav = programs.navidad;
         {reviews.map((r) => (
           <figure class="quote">
             <blockquote>
-              <p class="quote__head">«{r.headline}»</p>
-              <p class="quote__body">«{r.quote}»</p>
+              <p class="quote__head">{q(tr(r.headline, lang), lang)}</p>
+              <p class="quote__body">{q(tr(r.quote, lang), lang)}</p>
             </blockquote>
             <figcaption><strong>{r.outlet}</strong> · {r.author} · <span set:html={inline(tr(r.context, lang))} /> <a class="tap" href={r.url} rel="noopener">{tr(ui.readReview, lang)}</a></figcaption>
           </figure>
