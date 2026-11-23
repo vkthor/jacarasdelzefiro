@@ -214,3 +214,12 @@ figcaption, .caption { font-family: var(--sans); font-size: 0.74rem; letter-spac
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* Titulares y rótulos sin palabras huérfanas; párrafos mejor repartidos. */
+h1, h2, h3, .kicker, .subtitle-spaced, .title-display, .title-section, .title-program { text-wrap: balance; }
+p, li, figcaption { text-wrap: pretty; }
+@media (max-width: 520px) { .subtitle-spaced { letter-spacing: 0.2em; } }
+.kicker a { display: inline-block; padding: 0.5rem 0; margin: -0.5rem 0; }
+
+/* Enlaces sueltos en texto: zona de pulsación cómoda en el móvil sin cambiar el aspecto. */
+a.tap { display: inline-block; padding: 0.3rem 0; }

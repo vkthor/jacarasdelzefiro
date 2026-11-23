@@ -17,10 +17,10 @@ const year = new Date().getFullYear();
     </div>
     <div>
       <p class="kicker">{tr(ui.nav.contact, lang)}</p>
-      <p><a href={`mailto:${site.email}`}>{site.email}</a></p>
+      <p><a class="tap" href={`mailto:${site.email}`}>{site.email}</a></p>
       <p>
-        <a href={site.instagram} rel="noopener">Instagram {site.instagramHandle}</a><br />
-        <a href={site.youtube} rel="noopener">YouTube</a>
+        <a class="tap" href={site.instagram} rel="noopener">Instagram {site.instagramHandle}</a><br />
+        <a class="tap" href={site.youtube} rel="noopener">YouTube</a>
       </p>
       <p class="small">{lang === 'es' ? 'Dirección artística:' : 'Artistic director:'} <a href={site.directorSite} rel="noopener">Víctor Cruz</a></p>
     </div>
@@ -44,10 +44,13 @@ const year = new Date().getFullYear();
   .footer-logo { width: 130px; height: auto; filter: brightness(0) invert(0.92) sepia(0.25); opacity: 0.95; margin-bottom: 1rem; }
   .motto { font-style: italic; font-size: 1.15rem; color: #d9cbb6; }
   .site-footer ul { list-style: none; margin: 0; padding: 0; columns: 2; column-gap: 1.5rem; }
-  .site-footer li { margin-bottom: 0.35rem; }
+  .site-footer li { margin-bottom: 0.1rem; }
+  .site-footer li a { display: inline-block; padding: 0.2rem 0; }
   .site-footer a { text-decoration: none; }
   .site-footer a:hover { text-decoration: underline; color: #fff; }
   .small { font-size: 0.95rem; color: #cbbca7; }
+  .small a { display: inline-block; padding: 0.25rem 0; }
+  .footer-bottom a { display: inline-block; padding: 0.55rem 0.15rem; }
   .footer-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.6rem; margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid rgba(255, 255, 255, 0.12); font-family: var(--sans); font-size: 0.74rem; letter-spacing: 0.06em; color: #b9aa95; }
   @media (max-width: 860px) { .footer-grid { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } }
   @media (max-width: 520px) { .footer-grid { grid-template-columns: 1fr; } }

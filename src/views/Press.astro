@@ -126,7 +126,7 @@ const t = {
   .review .btn { margin-top: auto; }
   .mentions { list-style: none; margin: 0; padding: 0; }
   .mentions li { padding: 0.8rem 0; border-bottom: 1px solid var(--line); }
-  .mentions a { text-decoration: none; }
+  .mentions a { display: inline-block; padding: 0.3rem 0; text-decoration: none; }
   .mentions__date { font-family: var(--sans); font-size: 0.72rem; letter-spacing: 0.08em; color: var(--gold-ink); margin-left: 0.4rem; }
   .kit { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; margin: 2rem 0 3rem; }
   .kit__item { display: flex; flex-direction: column; gap: 0.6rem; text-decoration: none; color: var(--ink); font-family: var(--sans); font-size: 0.76rem; letter-spacing: 0.05em; }
@@ -136,5 +136,7 @@ const t = {
   @media (max-width: 760px) { .kit { grid-template-columns: 1fr; } }
   .kit-h { font-family: var(--display); color: var(--maroon); font-size: 1.3rem; }
   .dl, .credits { padding-left: 1.1rem; }
+  .dl a { display: inline-block; padding: 0.35rem 0; }
+  .kit-h { margin-top: 2rem; }
   .credits { font-size: 0.95rem; color: var(--ink-soft); }
 </style>

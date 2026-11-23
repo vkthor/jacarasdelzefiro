@@ -29,7 +29,7 @@ const t = {
     en: 'Original texts with English translation. Spelling follows the sources, lightly modernised.',
   },
   performers: { es: 'Intérpretes', en: 'Performers' },
-  silence: { es: 'Por favor, silencia el móvil y baja el brillo de la pantalla. ¡Gracias!', en: 'Please silence your phone and dim your screen. Thank you!' },
+  silence: { es: 'Por favor, silencia el móvil y baja el brillo de la pantalla. ¡Gracias!', en: 'Please silence your phone and dim your screen. Thank you!' },
   original: { es: 'Original', en: 'Original' },
   translation: { es: 'Traducción', en: 'English translation' },
   index: { es: 'Índice', en: 'Contents' },
@@ -70,7 +70,7 @@ const route = program === 'avecillas' ? 'bookletAvecillas' as const : 'bookletNa
           );
         })}
       </ol>
-      <p class="legend"><span class="star" aria-hidden="true">✱</span> {tr(ui.premiere, lang)} · <a href={url(p.key, lang)}>{lang === 'es' ? 'Fuentes y transcripciones' : 'Sources and transcriptions'}</a></p>
+      <p class="legend"><span class="star" aria-hidden="true">✱</span> {tr(ui.premiere, lang)} · <a class="tap" href={url(p.key, lang)}>{lang === 'es' ? 'Fuentes y transcripciones' : 'Sources and transcriptions'}</a></p>
     </div>
   </section>
 
@@ -131,8 +131,8 @@ const route = program === 'avecillas' ? 'bookletAvecillas' as const : 'bookletNa
   .bk-head :global(.bk-cat) { width: 74px; margin: 0 auto 1rem; }
   .bk-head .title-program { font-size: clamp(2.4rem, 7vw, 4.6rem); }
   .bk-silence { font-style: italic; color: var(--ink-soft); margin-top: 1.2rem; font-size: 1rem; }
-  .bk-index { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem 1.4rem; margin-top: 1.2rem; }
-  .bk-index a { font-family: var(--sans); font-size: 0.74rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; }
+  .bk-index { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 1.2rem; margin-top: 1.2rem; }
+  .bk-index a { display: inline-block; padding: 0.55rem 0.2rem; font-family: var(--sans); font-size: 0.74rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; }
   .bk-program { list-style: none; margin: 0; padding: 0; counter-reset: w; }
   .bk-program li { counter-increment: w; display: grid; grid-template-columns: 2.2rem 1fr; padding: 0.55rem 0; border-bottom: 1px solid var(--line); }
   .bk-program li::before { content: counter(w, upper-roman); grid-row: span 2; font-family: var(--display); color: var(--gold-ink); font-size: 0.85rem; padding-top: 0.25rem; }
@@ -148,15 +148,16 @@ const route = program === 'avecillas' ? 'bookletAvecillas' as const : 'bookletNa
   .text__sub { font-style: italic; color: var(--ink-soft); margin: 0.2rem 0 1rem; }
   .stanza { margin-bottom: 1.1rem; }
   .line { margin: 0; line-height: 1.5; }
+  .o, .t { display: block; padding-left: 1.1em; text-indent: -1.1em; }
   .text--bi .line { display: grid; grid-template-columns: 1fr 1fr; gap: 0 2rem; }
-  .text--bi .t { font-style: italic; color: var(--ink-soft); }
+  .text--bi .t { font-style: italic; color: var(--ink); opacity: 0.8; }
   @media (max-width: 680px) {
     .text--bi .line { grid-template-columns: 1fr; margin-bottom: 0.35rem; }
     .text--bi .t { font-size: 0.92em; }
   }
   .bk-end { margin: 2rem auto 0; width: 90px; }
   .cast { list-style: none; padding: 0; margin: 1rem 0 0; }
-  .cast li { padding: 0.3rem 0; }
-  .cast__role { font-family: var(--sans); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-ink); margin-right: 0.4rem; }
-  .cast a { font-weight: 600; text-decoration: none; }
+  .cast li { padding: 0.45rem 0; }
+  .cast__role { display: block; font-family: var(--sans); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-soft); }
+  .cast a { font-weight: 600; text-decoration: none; white-space: nowrap; font-size: 1.15rem; }
 </style>

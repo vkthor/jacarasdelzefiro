@@ -22,5 +22,10 @@ const { kicker, title, lead, bird, birdSide = 'right' } = Astro.props;
   .page-head :global(.page-head__bird) { top: 18%; width: clamp(80px, 11vw, 170px); }
   .page-head :global(.page-head__bird--right) { right: max(3vw, calc(50% - 560px)); }
   .page-head :global(.page-head__bird--left) { left: max(3vw, calc(50% - 560px)); transform: scaleX(-1); }
-  @media (max-width: 760px) { .page-head :global(.page-head__bird) { top: 8px; width: 70px; opacity: 0.9; } }
+  @media (max-width: 760px) {
+    .page-head:has(.page-head__bird) { padding-top: 104px; }
+    .page-head :global(.page-head__bird) { top: 10px; width: auto; height: 84px; opacity: 0.9; }
+    .page-head :global(.page-head__bird--right) { right: 16px; }
+    .page-head :global(.page-head__bird--left) { left: 16px; }
+  }
 </style>

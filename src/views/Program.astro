@@ -129,7 +129,7 @@ const description = `${p.title}. ${tr(p.subtitle, lang)}. ${tr(p.lead, lang)}`;
         <p class="pq__head">«{review.headline}»</p>
         <p class="pq__body">«{review.quote}»</p>
       </blockquote>
-      <p class="caption"><strong>{review.outlet}</strong> · {review.author} · <span set:html={inline(tr(review.context, lang))} /> <a href={review.url} rel="noopener">{tr(ui.readReview, lang)}</a></p>
+      <p class="caption"><strong>{review.outlet}</strong> · {review.author} · <span set:html={inline(tr(review.context, lang))} /> <a class="tap" href={review.url} rel="noopener">{tr(ui.readReview, lang)}</a></p>
     </div>
   </section>
 
@@ -161,8 +161,9 @@ const description = `${p.title}. ${tr(p.subtitle, lang)}. ${tr(p.lead, lang)}`;
   }
   .program-hero :global(.ph-bird--d) { left: 52%; bottom: 0; width: clamp(90px, 10vw, 150px); }
   @media (max-width: 860px) {
-    .program-hero--navidad :global(.ph-engraving) { position: relative; max-width: 100%; width: 100%; height: 220px; margin-top: -40px; mask-image: linear-gradient(to bottom, transparent, #000 30%); -webkit-mask-image: linear-gradient(to bottom, transparent, #000 30%); }
-    .program-hero :global(.ph-bird--a) { top: auto; bottom: 0; right: 0; opacity: 0.85; width: 130px; }
+    .program-hero--navidad :global(.ph-engraving) { position: relative; display: block; max-width: none; width: calc(100% + 16px); margin: -40px -8px 1.4rem; height: 220px; object-position: center 30%; mask-image: linear-gradient(to bottom, transparent, #000 18%); -webkit-mask-image: linear-gradient(to bottom, transparent, #000 18%); }
+    .program-hero--avecillas { padding-bottom: 150px; }
+    .program-hero :global(.ph-bird--a) { top: auto; bottom: 8px; right: 12px; opacity: 0.9; width: 118px; }
   }
   .program-body { display: grid; grid-template-columns: 1.5fr 1fr; gap: clamp(32px, 5vw, 72px); align-items: start; }
   .facts--stack { grid-template-columns: 1fr; }
