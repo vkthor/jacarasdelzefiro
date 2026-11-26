@@ -50,7 +50,7 @@ const t = {
       <div class="tech">
         <h2 class="title-section">{tr(t.tech, lang)}</h2>
         <ul>{t.techList[lang].map((li) => <li>{li}</li>)}</ul>
-        <p class="note">{lang === 'es' ? 'Dossieres y fotos en alta resolución, en la página de' : 'Press kits and high-resolution photos on the'} <a href={`${url('press', lang)}#kit`}>{lang === 'es' ? 'prensa' : 'press page'}</a>.</p>
+        <p class="note">{lang === 'es' ? 'Dossieres y fotos en alta resolución, en la página de' : 'Dossiers and high-resolution photos on the'} <a href={`${url('press', lang)}#kit`}>{lang === 'es' ? 'prensa' : 'press page'}</a>.</p>
         <Image src={gato} alt="" width={120} class="tech__cat" />
       </div>
     </div>

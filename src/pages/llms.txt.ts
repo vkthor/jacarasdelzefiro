@@ -69,7 +69,7 @@ More: ${u('press')}
 ## Other pages
 
 - Scores (free transcriptions for study and non-commercial performance): ${u('scores')}
-- Press kits (PDF) and photos: ${u('press')}#kit
+- Dossiers (PDF) and photos: ${u('press')}#kit
 - Contact: ${u('contact')}
 `;
   return new Response(body, { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });

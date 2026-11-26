@@ -40,7 +40,7 @@ export const concerts: Concert[] = [
     date: '2026-04-07', time: '20:00', city: 'Madrid', venue: 'Basílica Pontificia de San Miguel',
     series: { es: 'Festival Internacional de Arte Sacro de la Comunidad de Madrid', en: 'Madrid International Festival of Sacred Art' },
     program: { es: 'Avecillas', en: 'Avecillas' },
-    note: { es: 'Estreno del programa.', en: 'Program premiere.' },
+    note: { es: 'Estreno del programa.', en: 'Programme premiere.' },
     url: 'https://www.madrid.org/fias/2026/jacaras-zefiro.html',
     ensemble: 'jacaras',
   },

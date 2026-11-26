@@ -22,7 +22,7 @@ const workFor = (title: string) => p.works.find((w) => w.title === title);
 const slug = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
 const t = {
-  notes: { es: 'Notas al programa', en: 'Program notes' },
+  notes: { es: 'Notas al programa', en: 'Programme notes' },
   texts: { es: 'Textos cantados', en: 'Sung texts' },
   textsNote: {
     es: 'Los textos se reproducen con la grafía de las fuentes, ligeramente modernizada.',
