@@ -12,7 +12,7 @@ const title = kind === 'legal'
   ? { es: 'Aviso legal', en: 'Legal notice' }
   : { es: 'Privacidad y cookies', en: 'Privacy and cookies' };
 ---
-<Base lang={lang} route={kind} title={tr(title, lang)} description={tr(title, lang)}>
+<Base lang={lang} route={kind} title={tr(title, lang)} description={tr(title, lang)} noindex>
   <PageHead title={tr(title, lang)} />
   <section class="section section--tight">
     <div class="wrap narrow prose">

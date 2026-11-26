@@ -48,7 +48,7 @@ const t = {
 };
 const description = `${p.title}. ${tr(p.subtitle, lang)}. ${tr(p.lead, lang)}`;
 ---
-<Base lang={lang} route={t.route} title={p.title} description={plain(description)} image={photo}>
+<Base lang={lang} route={t.route} title={`${p.title} · ${tr(p.subtitle, lang)}`} description={plain(description)} image={photo}>
   <header class:list={['program-hero', 'linen', isAvec ? 'program-hero--avecillas' : 'program-hero--navidad']}>
     {isAvec ? (
       <>

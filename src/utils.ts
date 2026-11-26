@@ -24,5 +24,5 @@ export function composerName(name: string, lang: 'es' | 'en'): string {
 /** «A y B» → «A and B» en inglés. */
 export const names = (s: string, lang: 'es' | 'en') => (lang === 'en' ? s.replace(/ y /g, ' and ') : s);
 
-/** Quita las marcas de cursiva (para atributos y metadatos). */
-export const plain = (s: string) => s.replace(/\*\*?(.+?)\*\*?/g, '$1');
+/** Quita las marcas de cursiva y de enlace (para atributos y metadatos). */
+export const plain = (s: string) => s.replace(/\*\*?(.+?)\*\*?/g, '$1').replace(/\[(.+?)\]\((https?:\/\/[^)\s]+)\)/g, '$1');

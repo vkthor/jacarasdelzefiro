@@ -10,7 +10,11 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { routes, tr, ui, type Lang, type RouteKey } from '../i18n';
 import ogDefault from '../assets/fotos/playa-1.jpg';
+import logoImg from '../assets/logo/logo.png';
 import { getImage } from 'astro:assets';
+import { site } from '../data/site';
+import { musicians } from '../data/musicians';
+import { concerts } from '../data/concerts';
 
 interface Props {
   lang: Lang;
@@ -18,13 +22,76 @@ interface Props {
   title?: string;
   description: string;
   image?: ImageMetadata;
+  noindex?: boolean; // páginas que no deben salir en buscadores (aviso legal, privacidad, 404)
 }
-const { lang, route, title, description, image } = Astro.props;
+const { lang, route, title, description, image, noindex = false } = Astro.props;
 const siteName = tr(ui.siteName, lang);
-const fullTitle = title ? `${title} · ${siteName}` : `${siteName} · ${tr(ui.tagline, lang)}`;
+// Portada: nombre + lo que somos, con las palabras que se buscan («música antigua», «barroco»).
+const homeTitle = lang === 'es' ? 'Música antigua y barroco hispano' : 'Spanish early music and Baroque';
+const fullTitle = title ? `${title} · ${siteName}` : `${siteName} · ${homeTitle}`;
 const og = await getImage({ src: image ?? ogDefault, width: 1200, format: 'jpg', quality: 80 });
 const canonical = new URL(routes[route][lang], Astro.site);
 const alternates = (['es', 'en'] as Lang[]).map((l) => ({ l, href: new URL(routes[route][l], Astro.site).href }));
+
+// Datos estructurados (schema.org): el grupo, la web y la página, para buscadores y asistentes de IA.
+const home = new URL('/', Astro.site).href;
+const logo = await getImage({ src: logoImg, width: 512, format: 'png' });
+const groupDesc = {
+  es: 'Conjunto español de música antigua fundado y dirigido por el barítono Víctor Cruz. Recupera el repertorio barroco hispano —tonos, villancicos, jácaras y ensaladas— con voces, cuerda pulsada, viola da gamba y percusión.',
+  en: 'Spanish early-music ensemble founded and directed by baritone Víctor Cruz. It revives the Spanish Baroque repertoire —tonos, villancicos, jácaras and ensaladas— with voices, plucked strings, viola da gamba and percussion.',
+};
+const directorId = `${site.directorSite}/#person`;
+const group = {
+  '@type': 'MusicGroup',
+  '@id': `${home}#group`,
+  name: site.name,
+  url: home,
+  logo: new URL(logo.src, Astro.site).href,
+  image: new URL(og.src, Astro.site).href,
+  description: groupDesc[lang],
+  email: `mailto:${site.email}`,
+  foundingDate: '2025',
+  foundingLocation: { '@type': 'Place', name: 'España' },
+  genre: lang === 'es' ? ['Música antigua', 'Música barroca', 'Música del Renacimiento'] : ['Early music', 'Baroque music', 'Renaissance music'],
+  founder: { '@type': 'Person', '@id': directorId, name: site.director, url: `${site.directorSite}/` },
+  member: musicians.map((m) => ({
+    '@type': 'OrganizationRole',
+    roleName: m.role[lang],
+    member: m.id === 'victor-cruz'
+      ? { '@type': 'Person', '@id': directorId, name: m.name, url: `${site.directorSite}/` }
+      : { '@type': 'Person', name: m.name },
+  })),
+  sameAs: [site.instagram],
+};
+const events = concerts.map((c) => ({
+  '@type': 'MusicEvent',
+  name: `${c.ensemble === 'duo' ? 'Dúo del Zéfiro' : site.name}: ${c.program[lang]}`,
+  // Hora peninsular: +02:00 de abril a octubre, +01:00 el resto del año.
+  startDate: c.time ? `${c.date}T${c.time}:00${+c.date.slice(5, 7) >= 4 && +c.date.slice(5, 7) <= 10 ? '+02:00' : '+01:00'}` : c.date,
+  eventStatus: 'https://schema.org/EventScheduled',
+  eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+  location: { '@type': 'Place', name: c.venue, address: { '@type': 'PostalAddress', addressLocality: c.city, addressCountry: 'ES' } },
+  performer: c.ensemble === 'duo' ? { '@type': 'MusicGroup', name: 'Dúo del Zéfiro', url: new URL(routes.duo[lang], Astro.site).href } : { '@id': `${home}#group` },
+  ...(c.url ? { url: c.url } : {}),
+}));
+const jsonld = noindex ? null : {
+  '@context': 'https://schema.org',
+  '@graph': [
+    route === 'home' || route === 'ensemble' ? { ...group, event: events } : group,
+    { '@type': 'WebSite', '@id': `${home}#website`, url: home, name: site.name, inLanguage: ['es', 'en'], publisher: { '@id': `${home}#group` } },
+    {
+      '@type': route === 'ensemble' ? 'AboutPage' : route === 'contact' ? 'ContactPage' : 'WebPage',
+      '@id': `${canonical.href}#webpage`,
+      url: canonical.href,
+      name: fullTitle,
+      description,
+      inLanguage: lang,
+      isPartOf: { '@id': `${home}#website` },
+      about: { '@id': `${home}#group` },
+      primaryImageOfPage: new URL(og.src, Astro.site).href,
+    },
+  ],
+};
 ---
 <!doctype html>
 <html lang={lang}>
@@ -33,9 +100,11 @@ const alternates = (['es', 'en'] as Lang[]).map((l) => ({ l, href: new URL(route
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
     <link rel="canonical" href={canonical.href} />
     {alternates.map(({ l, href }) => <link rel="alternate" hreflang={l} href={href} />)}
     <link rel="alternate" hreflang="x-default" href={alternates[0].href} />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" href="/favicon.png" type="image/png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="theme-color" content="#6f2a31" />
@@ -49,7 +118,9 @@ const alternates = (['es', 'en'] as Lang[]).map((l) => ({ l, href: new URL(route
     <meta property="og:image:height" content={String(og.attributes.height ?? 800)} />
     <meta property="og:image:alt" content={lang === 'es' ? 'Jácaras del Zéfiro con sus instrumentos en la playa de Almuñécar' : 'Jácaras del Zéfiro with their instruments on the beach at Almuñécar'} />
     <meta property="og:locale" content={lang === 'es' ? 'es_ES' : 'en_GB'} />
+    <meta property="og:locale:alternate" content={lang === 'es' ? 'en_GB' : 'es_ES'} />
     <meta name="twitter:card" content="summary_large_image" />
+    {jsonld && <script type="application/ld+json" set:html={JSON.stringify(jsonld)} />}
     <slot name="head" />
   </head>
   <body>

@@ -2,7 +2,6 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  // Netlify pasa en URL la dirección principal del sitio (la .netlify.app o, cuando se conecte, el dominio propio).
   site: process.env.URL || 'https://jacarasdelzefiro.es',
   trailingSlash: 'always',
   build: { format: 'directory' },
@@ -14,6 +13,8 @@ export default defineConfig({
   },
   integrations: [
     sitemap({
+      // Aviso legal y privacidad llevan noindex: fuera del mapa del sitio.
+      filter: (page) => !/\/(aviso-legal|privacidad|legal-notice|privacy)\//.test(page),
       i18n: { defaultLocale: 'es', locales: { es: 'es-ES', en: 'en' } },
     }),
   ],
