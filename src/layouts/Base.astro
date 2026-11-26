@@ -53,7 +53,7 @@ const group = {
   foundingDate: '2025',
   foundingLocation: { '@type': 'Place', name: 'España' },
   genre: lang === 'es' ? ['Música antigua', 'Música barroca', 'Música del Renacimiento'] : ['Early music', 'Baroque music', 'Renaissance music'],
-  founder: { '@type': 'Person', '@id': directorId, name: site.director, url: `${site.directorSite}/` },
+  founder: { '@type': 'Person', '@id': directorId, name: site.director, url: `${site.directorSite}/`, sameAs: ['https://www.wikidata.org/wiki/Q130535337'] },
   member: musicians.map((m) => ({
     '@type': 'OrganizationRole',
     roleName: m.role[lang],
@@ -61,7 +61,7 @@ const group = {
       ? { '@type': 'Person', '@id': directorId, name: m.name, url: `${site.directorSite}/` }
       : { '@type': 'Person', name: m.name },
   })),
-  sameAs: [site.instagram],
+  sameAs: [site.instagram, 'https://www.wikidata.org/wiki/Q142294615'],
 };
 const events = concerts.map((c) => ({
   '@type': 'MusicEvent',
