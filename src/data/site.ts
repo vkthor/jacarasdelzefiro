@@ -8,6 +8,8 @@ export const site = {
   instagramHandle: '@jacarasdelzefiro',
   youtube: 'https://www.youtube.com/@victorcruzbaritono',
   directorSite: 'https://www.victorcruz.es',
+  // Cloudflare Web Analytics (sin cookies). Vacío = sin analítica.
+  cloudflareToken: '12009c184474438c83516fdacf8e22ee',
   // Titular del aviso legal (LSSI).
   owner: {
     name: 'Víctor Cruz García',

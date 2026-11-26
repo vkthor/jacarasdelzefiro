@@ -1,5 +1,5 @@
 ---
-// Aviso legal (LSSI) y política de privacidad. La web no usa cookies ni analítica.
+// Aviso legal (LSSI) y política de privacidad. La web no usa cookies; la analítica (Cloudflare) es opcional.
 import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import { site } from '../data/site';
@@ -8,6 +8,7 @@ import { tr, type Lang } from '../i18n';
 interface Props { lang: Lang; kind: 'legal' | 'privacy' }
 const { lang, kind } = Astro.props;
 const o = site.owner;
+const analytics = Boolean(site.cloudflareToken);
 const title = kind === 'legal'
   ? { es: 'Aviso legal', en: 'Legal notice' }
   : { es: 'Privacidad y cookies', en: 'Privacy and cookies' };
@@ -46,8 +47,14 @@ const title = kind === 'legal'
       )}
       {kind === 'privacy' && lang === 'es' && (
         <>
-          <h3>Sin cookies ni seguimiento</h3>
-          <p>Esta web no usa cookies, ni herramientas de analítica, ni publicidad. Las tipografías se sirven desde nuestro propio servidor.</p>
+          <h3>Sin cookies</h3>
+          <p>Esta web no usa cookies ni publicidad. Las tipografías se sirven desde nuestro propio servidor.</p>
+          {analytics && (
+            <>
+              <h3>Estadísticas de visitas</h3>
+              <p>Para saber cuántas visitas recibe la web y desde dónde llegan, usamos Cloudflare Web Analytics, que no usa cookies, no identifica a quien visita la web ni guarda su dirección IP.</p>
+            </>
+          )}
           <h3>Vídeos</h3>
           <p>Los vídeos de YouTube no se cargan hasta que pulsas el botón de reproducir. A partir de ese momento se cargan desde youtube-nocookie.com, y YouTube (Google) puede tratar datos según su propia política de privacidad.</p>
           <h3>Si nos escribes</h3>
@@ -56,8 +63,14 @@ const title = kind === 'legal'
       )}
       {kind === 'privacy' && lang === 'en' && (
         <>
-          <h3>No cookies, no tracking</h3>
-          <p>This website uses no cookies, analytics or advertising. Fonts are served from our own server.</p>
+          <h3>No cookies</h3>
+          <p>This website uses no cookies or advertising. Fonts are served from our own server.</p>
+          {analytics && (
+            <>
+              <h3>Visitor statistics</h3>
+              <p>To know how many visits the website receives and where they come from, we use Cloudflare Web Analytics, which sets no cookies, does not identify visitors and does not store their IP address.</p>
+            </>
+          )}
           <h3>Videos</h3>
           <p>YouTube videos are not loaded until you press play. From then on they load from youtube-nocookie.com, and YouTube (Google) may process data under its own privacy policy.</p>
           <h3>If you write to us</h3>
