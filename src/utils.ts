@@ -6,7 +6,8 @@ const esc = (s: string) =>
 export function inline(s: string): string {
   return esc(s)
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\*(.+?)\*/g, '<em>$1</em>');
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/\[(.+?)\]\((https?:\/\/[^)\s]+)\)/g, '<a href="$2" rel="noopener">$1</a>');
 }
 
 /** Nombre de compositor en el idioma pedido (sólo cambian apodos y «Anónimo»). */
