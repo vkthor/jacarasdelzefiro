@@ -100,6 +100,7 @@ const jsonld = noindex ? null : {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
+    {route === 'home' && lang === 'es' && <meta name="msvalidate.01" content="615E3B47AFB25F5FAB8B0CEA204CDDC4" />}
     {noindex && <meta name="robots" content="noindex, follow" />}
     <link rel="canonical" href={canonical.href} />
     {alternates.map(({ l, href }) => <link rel="alternate" hreflang={l} href={href} />)}
