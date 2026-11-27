@@ -32,8 +32,8 @@ const t = {
   },
   shortBio: { es: 'Presentación breve', en: 'Short biography' },
   bio: {
-    es: 'Jácaras del Zéfiro es un ensemble de música antigua fundado por el barítono Víctor Cruz y especializado en el repertorio hispano del Renacimiento y el Barroco. Combina investigación musicológica e instinto escénico para recuperar el pulso real de estas obras: su ímpetu, su danza y su capacidad de conmover. Cinco de sus seis músicos cantan y tocan a la vez (voces, cuerda pulsada, viola da gamba y percusión), y buena parte de su repertorio son estrenos en tiempos modernos transcritos de manuscritos catedralicios. Se presentó en 2025 en el ciclo Música en Adviento de la Junta de Andalucía y ha actuado en el Festival Internacional de Arte Sacro de Madrid, Guadix Clásica y el Festival de Música Española de Cádiz.',
-    en: 'Jácaras del Zéfiro is an early music ensemble founded by baritone Víctor Cruz, specialising in Hispanic repertoire of the Renaissance and Baroque. It combines musicological research with stage instinct to recover the true pulse of these works: their drive, their dance and their power to move. Five of its six musicians sing and play at the same time (voices, plucked strings, viola da gamba and percussion), and much of its repertoire consists of modern-day premieres transcribed from cathedral manuscripts. It made its debut in 2025 at the Junta de Andalucía’s Música en Adviento series and has performed at the Madrid International Festival of Sacred Art, Guadix Clásica and the Cádiz Festival of Spanish Music.',
+    es: '[Jácaras del Zéfiro](https://jacarasdelzefiro.es/) es un ensemble de música antigua fundado por el [barítono Víctor Cruz](https://www.victorcruz.es/) y especializado en el repertorio hispano del Renacimiento y el Barroco. Combina investigación musicológica e instinto escénico para recuperar el pulso real de estas obras: su ímpetu, su danza y su capacidad de conmover. Sus músicos cantan y tocan a la vez (voces, cuerda pulsada, viola da gamba y percusión), y buena parte de su repertorio son estrenos en tiempos modernos transcritos de manuscritos catedralicios. Se presentó en 2025 en el ciclo Música en Adviento de la Junta de Andalucía y ha actuado en el Festival Internacional de Arte Sacro de Madrid, Guadix Clásica, el Festival de Música Española de Cádiz y, con el Dúo del Zéfiro, Clásicos en Verano de la Comunidad de Madrid.',
+    en: '[Jácaras del Zéfiro](https://jacarasdelzefiro.es/en/) is an early music ensemble founded by [baritone Víctor Cruz](https://www.victorcruz.es/en/), specialising in Hispanic repertoire of the Renaissance and Baroque. It combines musicological research with stage instinct to recover the true pulse of these works: their drive, their dance and their power to move. Its musicians sing and play at the same time (voices, plucked strings, viola da gamba and percussion), and much of its repertoire consists of modern-day premieres transcribed from cathedral manuscripts. It made its debut in 2025 at the Junta de Andalucía’s Música en Adviento series and has performed at the Madrid International Festival of Sacred Art, Guadix Clásica and the Cádiz Festival of Spanish Music and, with the Dúo del Zéfiro, the Comunidad de Madrid’s Clásicos en Verano.',
   },
   credits: { es: 'Créditos de las fotos', en: 'Photo credits' },
   photo: { es: 'Foto de grupo', en: 'Group photo' },
@@ -96,7 +96,7 @@ const t = {
       <div class="grid-2 kit-text">
         <div>
           <h3 class="kit-h">{tr(t.shortBio, lang)}</h3>
-          <p>{tr(t.bio, lang)}</p>
+          <p set:html={inline(tr(t.bio, lang))} />
         </div>
         <div>
           <h3 class="kit-h">{tr(t.dossiers, lang)}</h3>

@@ -24,19 +24,25 @@ const hasPremieres = works.some((w) => w.premiere);
 {hasPremieres && <p class="legend"><span class="star" aria-hidden="true">✱</span> {tr(ui.premiere, lang)}</p>}
 
 <style>
+  /* Repertorio: tinta más oscura, cuerpo y peso algo mayores para que se lea bien sobre el papel. */
   .works { list-style: none; margin: 0; padding: 0; counter-reset: work; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(24px, 4vw, 64px); }
   @media (max-width: 760px) { .works { grid-template-columns: 1fr; } }
-  .work { counter-increment: work; position: relative; padding: 1.1rem 0 1.1rem 3rem; border-top: 1px solid var(--line); break-inside: avoid; }
+  .work { counter-increment: work; position: relative; padding: 1.2rem 0 1.25rem 3.1rem; border-top: 1px solid var(--line); break-inside: avoid; }
   .work::before {
-    content: counter(work, upper-roman); position: absolute; left: 0; top: 1.15rem; width: 2.3rem;
-    font-family: var(--display); font-size: 0.85rem; color: var(--gold-ink); letter-spacing: 0.05em;
+    content: counter(work, upper-roman); position: absolute; left: 0; top: 1.4rem; width: 2.4rem;
+    font-family: var(--display); font-size: 0.92rem; font-weight: 600; color: var(--gold-ink); letter-spacing: 0.05em;
   }
-  .work__title { font-family: var(--serif); font-size: 1.28rem; font-weight: 600; color: var(--maroon); margin: 0 0 0.15rem; }
-  .work__voices { font-weight: 400; color: var(--ink-soft); font-size: 0.92em; }
-  .work__composer { margin: 0; font-size: 1.05rem; }
-  .work__dates { color: var(--ink-soft); }
-  .work__meta { margin: 0.15rem 0 0; font-size: 0.95rem; color: var(--ink-soft); }
-  .work__transcr { margin: 0.1rem 0 0; font-size: 0.92rem; font-style: italic; color: var(--ink-soft); }
+  .work__title { font-family: var(--serif); font-size: 1.4rem; font-weight: 650; line-height: 1.2; color: var(--maroon); margin: 0 0 0.25rem; }
+  .work__voices { font-weight: 500; color: #4e3f34; font-size: 0.86em; }
+  .work__composer { margin: 0; font-size: 1.1rem; font-weight: 500; line-height: 1.4; color: var(--ink); }
+  .work__dates { font-weight: 400; color: #4e3f34; }
+  .work__meta { margin: 0.3rem 0 0; font-size: 1.02rem; font-weight: 450; line-height: 1.42; color: #3f3229; }
+  .work__transcr { margin: 0.2rem 0 0; font-size: 1rem; font-weight: 450; line-height: 1.4; font-style: italic; color: #4e3f34; }
   .star { color: var(--coral); margin-left: 0.3em; font-size: 0.85em; font-style: normal; }
-  .legend { font-family: var(--sans); font-size: 0.78rem; letter-spacing: 0.06em; color: var(--ink-soft); margin-top: 1.2rem; }
+  .legend { font-family: var(--sans); font-size: 0.82rem; font-weight: 500; letter-spacing: 0.05em; color: #4e3f34; margin-top: 1.2rem; }
+  @media (max-width: 520px) {
+    .work { padding-left: 2.6rem; }
+    .work::before { width: 2.2rem; font-size: 0.86rem; }
+    .work__title { font-size: 1.32rem; }
+  }
 </style>

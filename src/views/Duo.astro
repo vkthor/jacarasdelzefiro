@@ -34,8 +34,8 @@ const t = {
     en: 'This adaptation by Víctor Cruz for voice and plucked strings focuses on the music of the play, framing each piece with short dramatic interludes that place the audience inside each of Don Quixote’s misadventures and entanglements. The show features stage direction and dramaturgy by Beatriz González Calderón and costumes by Berta Grasset.',
   },
   p3: {
-    es: 'Es un formato ligero y flexible, que funciona igual de bien en un teatro que al aire libre —patios, claustros, castillos— y no necesita piano.',
-    en: 'It is a light, flexible format that works just as well in a theatre as in the open air —courtyards, cloisters, castles— and needs no piano.',
+    es: 'Es un formato ligero y flexible, que luce igual en la intimidad de un teatro que al aire libre, en patios, claustros y castillos.',
+    en: 'It is a light, flexible format, equally at home in the intimacy of a theatre or in the open air, in courtyards, cloisters and castles.',
   },
   facts: [
     { l: { es: 'Intérpretes', en: 'Performers' }, v: { es: 'Víctor Cruz, canto y narración · Juan Carlos de Mulder, archilaúd', en: 'Víctor Cruz, voice and narration · Juan Carlos de Mulder, archlute' } },
@@ -43,7 +43,7 @@ const t = {
     { l: { es: 'Estreno', en: 'Premiere' }, v: { es: 'Clásicos en Verano (Comunidad de Madrid), del 14 al 16 de agosto de 2026, tres funciones', en: 'Clásicos en Verano (Comunidad de Madrid), 14–16 August 2026, three performances' } },
   ],
   program: { es: 'Programa', en: 'Programme' },
-  watch: { es: 'Mira un fragmento del estreno en Instagram', en: 'Watch an excerpt from the premiere on Instagram' },
+  watch: { es: 'Mira el tráiler del estreno en Instagram', en: 'Watch the premiere trailer on Instagram' },
 };
 const works = [
   ['When the world first knew creation', 'Henry Purcell'],
@@ -104,7 +104,8 @@ const works = [
 
 <style>
   .duo-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: clamp(32px, 5vw, 72px); align-items: start; }
-  .duo-grid :global(.duo-photo) { width: 100%; box-shadow: 0 24px 40px -28px rgba(42, 31, 24, 0.8); }
+  /* La foto original deja mucho negro bajo los músicos: se recorta a 5:4 desde arriba para que queden centrados en vertical. */
+  .duo-grid :global(.duo-photo) { width: 100%; height: auto; aspect-ratio: 5 / 4; object-fit: cover; object-position: 50% 0; box-shadow: 0 24px 40px -28px rgba(42, 31, 24, 0.8); }
   @media (max-width: 860px) { .duo-grid { grid-template-columns: 1fr; } }
   .duo-works { list-style: none; padding: 0; margin: 0; counter-reset: w; }
   .duo-works li { counter-increment: w; display: flex; justify-content: space-between; gap: 1rem; padding: 0.7rem 0; border-bottom: 1px solid var(--line); }

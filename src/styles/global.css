@@ -153,8 +153,13 @@ h1, h2, h3, h4 { margin: 0 0 0.5em; line-height: 1.15; font-weight: 500; text-wr
 .btn-row { display: flex; flex-wrap: wrap; gap: 0.8rem; }
 
 /* Secciones y fondos */
-.section { padding-block: clamp(56px, 8vw, 112px); position: relative; }
-.section--tight { padding-block: clamp(40px, 5vw, 72px); }
+/* Menos aire entre secciones (mismo criterio que victorcruz.es): sin márgenes sobrantes
+   al principio y al final, y sin doble relleno entre dos secciones seguidas del mismo fondo. */
+.section { padding-block: clamp(44px, 5.5vw, 76px); position: relative; }
+.section--tight { padding-block: clamp(32px, 4vw, 52px); }
+.section > .wrap:last-child > :last-child { margin-bottom: 0; }
+.section > .wrap:first-child > :first-child { margin-top: 0; }
+.section--tight:not(.linen):not(.linen-light):not(.night) + .section--tight:not(.linen):not(.linen-light):not(.night) { padding-top: 0; }
 /* Lienzo con un velo crema encima para que el texto se lea bien. */
 .linen {
   background-color: var(--paper-deep);

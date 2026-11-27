@@ -51,7 +51,7 @@ export const photoCredits = [
   { what: { es: 'Retrato de Paloma Friedhoff', en: 'Portrait of Paloma Friedhoff' }, who: 'Paloma Friedhoff' },
   { what: { es: 'Retrato de Bruno Campelo', en: 'Portrait of Bruno Campelo' }, who: 'José Cáceres' },
   { what: { es: 'Retrato de Ariel Hernández', en: 'Portrait of Ariel Hernández' }, who: 'Adolfo Añino' },
-  { what: { es: 'Retrato de Víctor Cruz', en: 'Portrait of Víctor Cruz' }, who: 'Víctor Cruz' },
+  { what: { es: 'Retrato de Víctor Cruz', en: 'Portrait of Víctor Cruz' }, who: 'Tomoyo Daidouji' },
   { what: { es: 'Retrato de Jorge Enrique García', en: 'Portrait of Jorge Enrique García' }, who: 'Maxine Caulfield' },
   { what: { es: 'Retrato de Juan Carlos de Mulder', en: 'Portrait of Juan Carlos de Mulder' }, who: 'Pablo F. Juárez' },
 ];
