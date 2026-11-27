@@ -12,8 +12,8 @@ import { inline, plain } from '../utils';
 
 import posterBatalla from '../assets/fotos/video-batalla.jpg';
 import posterTeaser from '../assets/fotos/almunecar-concierto-1-editada.jpg';
-import fotoAvecillas from '../assets/fotos/cadiz-avecillas.jpg';
-import fotoNavidad from '../assets/fotos/almunecar-grupo.jpg';
+import fotoAvecillas from '../assets/fotos/fias-san-miguel.jpg';
+import fotoNavidad from '../assets/fotos/almunecar-encarnacion.jpg';
 import azulejo from '../assets/graficos/ave-azulejo-rama.webp';
 import petirrojo1 from '../assets/graficos/ave-petirrojo-1.webp';
 import petirrojo2 from '../assets/graficos/ave-petirrojo-2.webp';
@@ -28,6 +28,8 @@ const isAvec = program === 'avecillas';
 const video = videos[p.video];
 const poster = isAvec ? posterBatalla : posterTeaser;
 const photo = isAvec ? fotoAvecillas : fotoNavidad;
+// Encuadre de la cabecera: el grupo es pequeño y está abajo (Avecillas) o a la derecha (Navidad).
+const photoPos = isAvec ? '50% 70%' : '60% 55%';
 const review = isAvec ? reviews[0] : reviews[1];
 
 const t = {
@@ -91,7 +93,7 @@ const description = `${p.title}. ${tr(p.subtitle, lang)}. ${tr(p.lead, lang)}`;
   </section>
 
   <figure class="program-photo">
-    <Image src={photo} alt="" widths={[800, 1400, 2000]} sizes="100vw" format="webp" quality={76} />
+    <Image src={photo} alt="" widths={[800, 1400, 2000]} sizes="100vw" format="webp" quality={76} style={`object-position: ${photoPos}`} />
   </figure>
 
   <section class="section" id="programa">

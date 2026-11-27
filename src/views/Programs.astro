@@ -4,8 +4,8 @@ import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import { programs } from '../data/programs';
 import { tr, ui, url, type Lang } from '../i18n';
-import fotoA from '../assets/fotos/cadiz-avecillas.jpg';
-import fotoN from '../assets/fotos/almunecar-grupo.jpg';
+import fotoA from '../assets/fotos/fias-san-miguel.jpg';
+import fotoN from '../assets/fotos/almunecar-encarnacion.jpg';
 import duo from '../assets/fotos/duo-del-zefiro.jpg';
 import petirrojo from '../assets/graficos/ave-petirrojo-vuelo.webp';
 
@@ -36,8 +36,8 @@ const t = {
   },
 };
 const items = [
-  { p: programs.avecillas, photo: fotoA, stats: t.stats.avecillas, route: 'avecillas' as const },
-  { p: programs.navidad, photo: fotoN, stats: t.stats.navidad, route: 'navidad' as const },
+  { p: programs.avecillas, photo: fotoA, pos: '50% 50%', stats: t.stats.avecillas, route: 'avecillas' as const },
+  { p: programs.navidad, photo: fotoN, pos: '78% 50%', stats: t.stats.navidad, route: 'navidad' as const },
 ];
 import { inline } from '../utils';
 ---
@@ -45,9 +45,9 @@ import { inline } from '../utils';
   <PageHead kicker="Jácaras del Zéfiro" title={tr(t.title, lang)} lead={tr(t.lead, lang)} bird={petirrojo} />
   <section class="section">
     <div class="wrap list">
-      {items.map(({ p, photo, stats, route }, i) => (
+      {items.map(({ p, photo, pos, stats, route }, i) => (
         <article class:list={['row', { 'row--rev': i % 2 }]}>
-          <a href={url(route, lang)} class="row__img"><Image src={photo} alt="" widths={[600, 1000]} sizes="(max-width: 860px) 100vw, 560px" format="webp" quality={76} /></a>
+          <a href={url(route, lang)} class="row__img"><Image src={photo} alt="" widths={[600, 1000]} sizes="(max-width: 860px) 100vw, 560px" format="webp" quality={76} style={`object-position: ${pos}`} /></a>
           <div>
             <h2 class="title-program row__title"><a href={url(route, lang)}>{p.title}</a></h2>
             <p class="subtitle-spaced">{tr(p.subtitle, lang)}</p>

@@ -46,7 +46,8 @@ export const imageCredits = {
 };
 
 export const photoCredits = [
-  { what: { es: 'Fotos de grupo en la playa de Almuñécar y del concierto de estreno', en: 'Group photos on the beach at Almuñécar and of the debut concert' }, who: 'Domingo Campillo' },
+  { what: { es: 'Fotos de grupo en la playa de Almuñécar y del concierto de estreno (Iglesia de la Encarnación de Almuñécar)', en: 'Group photos on the beach at Almuñécar and of the debut concert (Church of the Incarnation, Almuñécar)' }, who: 'Domingo Campillo' },
+  { what: { es: 'Foto del concierto en el FIAS (Basílica de San Miguel)', en: 'Photo of the concert at FIAS (Basilica of San Miguel)' }, who: 'Pablo F. Juárez' },
   { what: { es: 'Foto del Dúo del Zéfiro', en: 'Photo of the Dúo del Zéfiro' }, who: 'Víctor Cruz' },
   { what: { es: 'Retrato de Paloma Friedhoff', en: 'Portrait of Paloma Friedhoff' }, who: 'Paloma Friedhoff' },
   { what: { es: 'Retrato de Bruno Campelo', en: 'Portrait of Bruno Campelo' }, who: 'José Cáceres' },
