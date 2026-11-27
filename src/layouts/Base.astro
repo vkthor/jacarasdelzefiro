@@ -10,6 +10,9 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { routes, tr, ui, type Lang, type RouteKey } from '../i18n';
 import ogDefault from '../assets/fotos/playa-1.jpg';
+import fotoAvecillas from '../assets/fotos/fias-percusion.jpg';
+import fotoNavidad from '../assets/fotos/almunecar-gamba.jpg';
+import fotoDuo from '../assets/fotos/duo-del-zefiro.jpg';
 import logoImg from '../assets/logo/logo.png';
 import { getImage } from 'astro:assets';
 import { site } from '../data/site';
@@ -63,17 +66,43 @@ const group = {
   })),
   sameAs: [site.instagram, 'https://www.wikidata.org/wiki/Q142294615'],
 };
-const events = concerts.map((c) => ({
-  '@type': 'MusicEvent',
-  name: `${c.ensemble === 'duo' ? 'Dúo del Zéfiro' : site.name}: ${c.program[lang]}`,
-  // Hora peninsular: +02:00 de abril a octubre, +01:00 el resto del año.
-  startDate: c.time ? `${c.date}T${c.time}:00${+c.date.slice(5, 7) >= 4 && +c.date.slice(5, 7) <= 10 ? '+02:00' : '+01:00'}` : c.date,
-  eventStatus: 'https://schema.org/EventScheduled',
-  eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
-  location: { '@type': 'Place', name: c.venue, address: { '@type': 'PostalAddress', addressLocality: c.city, addressCountry: 'ES' } },
-  performer: c.ensemble === 'duo' ? { '@type': 'MusicGroup', name: 'Dúo del Zéfiro', url: new URL(routes.duo[lang], Astro.site).href } : { '@id': `${home}#group` },
-  ...(c.url ? { url: c.url } : {}),
-}));
+// Conciertos para Google («eventos»): no se ven en la página. Todos han sido de entrada gratuita.
+const tz = (d: string) => (+d.slice(5, 7) >= 4 && +d.slice(5, 7) <= 10 ? '+02:00' : '+01:00'); // hora peninsular
+const eventArt = {
+  avecillas: { route: 'avecillas', img: await getImage({ src: fotoAvecillas, width: 1200, format: 'jpg', quality: 80 }) },
+  navidad: { route: 'navidad', img: await getImage({ src: fotoNavidad, width: 1200, format: 'jpg', quality: 80 }) },
+  duo: { route: 'duo', img: await getImage({ src: fotoDuo, width: 1200, format: 'jpg', quality: 80 }) },
+} as const;
+const events = concerts.map((c) => {
+  const art = eventArt[c.ensemble === 'duo' ? 'duo' : c.program.es === 'Avecillas' ? 'avecillas' : 'navidad'];
+  const page = new URL(routes[art.route][lang], Astro.site).href;
+  const who = c.ensemble === 'duo' ? 'Dúo del Zéfiro' : site.name;
+  // Fin: el día indicado o, en conciertos de un día, hora y media después del comienzo.
+  let endDate = c.endDate ?? c.date;
+  if (!c.endDate && c.time) {
+    const [h, m] = c.time.split(':').map(Number);
+    const t = h * 60 + m + 90;
+    endDate = `${c.date}T${String(Math.floor(t / 60)).padStart(2, '0')}:${String(t % 60).padStart(2, '0')}:00${tz(c.date)}`;
+  }
+  return {
+    '@type': 'MusicEvent',
+    name: `${who}: ${c.program[lang]}`,
+    description: lang === 'es'
+      ? `${who}: «${c.program.es}». ${c.series.es}. ${c.venue}, ${c.city}. Entrada gratuita.`
+      : `${who}: “${c.program.en}”. ${c.series.en}. ${c.venue}, ${c.city}. Free admission.`,
+    image: [new URL(art.img.src, Astro.site).href],
+    startDate: c.time ? `${c.date}T${c.time}:00${tz(c.date)}` : c.date,
+    endDate,
+    eventStatus: 'https://schema.org/EventScheduled',
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    location: { '@type': 'Place', name: c.venue, address: { '@type': 'PostalAddress', addressLocality: c.city, addressCountry: 'ES' } },
+    performer: c.ensemble === 'duo' ? { '@type': 'MusicGroup', name: 'Dúo del Zéfiro', url: new URL(routes.duo[lang], Astro.site).href } : { '@id': `${home}#group` },
+    organizer: { '@type': 'Organization', name: c.series[lang], ...(c.url ? { url: c.url } : {}) },
+    isAccessibleForFree: true,
+    offers: { '@type': 'Offer', price: 0, priceCurrency: 'EUR', availability: 'https://schema.org/InStock', url: c.url ?? page },
+    url: c.url ?? page,
+  };
+});
 const jsonld = noindex ? null : {
   '@context': 'https://schema.org',
   '@graph': [

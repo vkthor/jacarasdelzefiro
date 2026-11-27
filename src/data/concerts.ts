@@ -4,6 +4,7 @@ import type { T } from '../i18n';
 export type Concert = {
   date: string; // AAAA-MM-DD
   time?: string;
+  endDate?: string; // AAAA-MM-DD, si dura más de un día
   city: string;
   venue: string;
   series: T;
@@ -23,7 +24,7 @@ export const concerts: Concert[] = [
     ensemble: 'jacaras',
   },
   {
-    date: '2026-08-14', city: 'Comunidad de Madrid', venue: 'San Martín de Valdeiglesias, Pinilla del Valle y Berzosa de Lozoya',
+    date: '2026-08-14', endDate: '2026-08-16', city: 'Comunidad de Madrid', venue: 'San Martín de Valdeiglesias, Pinilla del Valle y Berzosa de Lozoya',
     series: { es: 'Clásicos en Verano', en: 'Clásicos en Verano' },
     program: { es: 'La Cómica Historia de Don Quijote', en: 'The Comical History of Don Quixote' },
     note: { es: 'Estreno. Tres funciones, del 14 al 16 de agosto.', en: 'Premiere. Three performances, 14–16 August.' },
