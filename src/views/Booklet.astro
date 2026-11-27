@@ -11,7 +11,7 @@ import { composerName, inline, plain } from '../utils';
 import textosAvecillas from '../data/textos/avecillas.json';
 import textosNavidad from '../data/textos/navidad.json';
 import petirrojo from '../assets/graficos/ave-petirrojo-3.webp';
-import gato from '../assets/logo/gato.png';
+import gato from '../assets/logo/gato-v2.svg';
 
 interface Props { lang: Lang; program: ProgramKey }
 const { lang, program } = Astro.props;
@@ -39,7 +39,7 @@ const route = program === 'avecillas' ? 'bookletAvecillas' as const : 'bookletNa
 <Base lang={lang} route={route} title={`${tr(ui.booklet, lang)} · ${p.title}`} description={plain(`${tr(ui.booklet, lang)}: ${p.title}. ${tr(p.subtitle, lang)}. ${tr(ui.bookletLong, lang)}.`)}>
   <header class="bk-head linen">
     <div class="wrap narrow center">
-      <Image src={gato} alt="" width={90} class="bk-cat" loading="eager" />
+      <img src={gato.src} alt="" width="56" height="51" class="bk-cat" loading="eager" />
       <p class="kicker">{tr(ui.booklet, lang)} · Jácaras del Zéfiro</p>
       <h1 class="title-program">{p.title}</h1>
       <p class="subtitle-spaced">{tr(p.subtitle, lang)}</p>
@@ -128,7 +128,7 @@ const route = program === 'avecillas' ? 'bookletAvecillas' as const : 'bookletNa
 
 <style>
   .bk-head { padding: clamp(40px, 6vw, 80px) 0 clamp(40px, 6vw, 72px); }
-  .bk-head :global(.bk-cat) { width: 74px; margin: 0 auto 1rem; }
+  .bk-head :global(.bk-cat) { width: 56px; height: auto; margin: 0 auto 2.3rem; }
   .bk-head .title-program { font-size: clamp(2.4rem, 7vw, 4.6rem); }
   .bk-silence { font-style: italic; color: var(--ink-soft); margin-top: 1.2rem; font-size: 1rem; }
   .bk-index { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 1.2rem; margin-top: 1.2rem; }

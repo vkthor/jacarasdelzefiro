@@ -7,7 +7,7 @@ export const reviews = [
     author: 'Simón Andueza',
     date: '2026-04-09',
     headline: { es: 'Jácaras del Zéfiro y el Festival de Arte Sacro emprenden un vuelo esperanzador', en: 'Jácaras del Zéfiro and the Festival of Sacred Art take wing, full of promise' } as T,
-    quote: { es: 'formidable programa tan coherente, variado y de una calidad musical tan exquisita', en: 'formidable programme, so coherent, so varied and of such exquisite musical quality' } as T,
+    quote: { es: 'formidable programa coherente, variado y de una calidad musical tan exquisita', en: 'formidable programme, coherent, varied and of such exquisite musical quality' } as T,
     context: {
       es: 'Crítica de *Avecillas* en el Festival Internacional de Arte Sacro de Madrid.',
       en: 'Review of *Avecillas* at the Madrid International Festival of Sacred Art.',

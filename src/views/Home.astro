@@ -14,7 +14,7 @@ import { inline } from '../utils';
 import playa from '../assets/fotos/playa-1.jpg';
 import poster from '../assets/fotos/video-batalla.jpg';
 import duoFoto from '../assets/fotos/duo-del-zefiro-circulo.jpg';
-import gato from '../assets/logo/gato.png';
+import gato from '../assets/logo/gato-v2.svg';
 import golondrina1 from '../assets/graficos/ave-golondrina-1.webp';
 import golondrina2 from '../assets/graficos/ave-golondrina-2.webp';
 import azulejo from '../assets/graficos/ave-azulejo-rama.webp';
@@ -60,8 +60,12 @@ const t = {
   musiciansKicker: { es: 'Los músicos', en: 'The musicians' },
   ctaTitle: { es: '¿Programas un festival o un ciclo?', en: 'Do you programme a festival or a concert series?' },
   ctaText: {
-    es: 'Llevamos nuestros propios instrumentos y nos adaptamos a iglesias, auditorios y salas de cámara: lo esencial es una buena acústica. Escríbenos y te enviamos el dossier, la ficha técnica y las condiciones.',
-    en: 'We bring our own instruments and adapt to churches, concert halls and chamber venues: what matters most is good acoustics. Write to us and we will send you the dossier, technical rider and terms.',
+    es: 'Llevamos nuestros propios instrumentos y nos adaptamos a iglesias, auditorios y salas de cámara: lo esencial es una buena acústica.',
+    en: 'We bring our own instruments and adapt to churches, concert halls and chamber venues: what matters most is good acoustics.',
+  },
+  ctaWrite: {
+    es: 'Escríbenos y te enviamos el dossier, la ficha técnica y las condiciones.',
+    en: 'Write to us and we will send you the dossier, technical rider and terms.',
   },
 };
 const avec = programs.avecillas;
@@ -92,7 +96,7 @@ const nav = programs.navidad;
         <p><a class="btn" href={url('ensemble', lang)}>{tr(ui.meetEnsemble, lang)}</a></p>
       </div>
       <div class="intro__seal">
-        <Image src={gato} alt="" width={340} class="intro__cat" />
+        <img src={gato.src} alt="" width="340" height="311" loading="lazy" decoding="async" class="intro__cat" style="scale: 0.76" />
       </div>
     </div>
   </section>
@@ -194,7 +198,7 @@ const nav = programs.navidad;
     <div class="wrap narrow center">
       <p class="kicker">{tr(ui.forProgrammers, lang)}</p>
       <h2 class="title-section">{tr(t.ctaTitle, lang)}</h2>
-      <p>{tr(t.ctaText, lang)}</p>
+      <p>{tr(t.ctaText, lang)}<br />{tr(t.ctaWrite, lang)}</p>
       <div class="btn-row cta__btns">
         <a class="btn btn--solid" href={url('contact', lang)}>{tr(ui.writeUs, lang)}</a>
         <a class="btn" href={url('programs', lang)}>{tr(ui.allPrograms, lang)}</a>

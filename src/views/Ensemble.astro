@@ -8,7 +8,7 @@ import { musicians } from '../data/musicians';
 import { tr, url, type Lang } from '../i18n';
 import { inline } from '../utils';
 import playa2 from '../assets/fotos/playa-2.jpg';
-import gato from '../assets/logo/gato.png';
+import gato from '../assets/logo/gato-v2.svg';
 import golondrina from '../assets/graficos/ave-golondrina-2.webp';
 import trepador from '../assets/graficos/ave-trepador.webp';
 import carrizo from '../assets/graficos/ave-carrizo.webp';
@@ -32,13 +32,13 @@ const t = {
     en: 'Founded by baritone [Víctor Cruz](https://www.victorcruz.es/en/), Jácaras del Zéfiro offers a vision of historically informed performance in which research and instinct go hand in hand. The aim is to go beyond mere archaeological reconstruction and recover the true pulse of the works: their drive, their dance and their power to move.',
   },
   who2: {
-    es: 'El ensemble combina voces, cuerda pulsada, viola da gamba y percusión, integrando a intérpretes de sólida carrera que entienden la música antigua no como piezas de museo, sino como un lenguaje vibrante que requiere conocimiento, pero también viveza y carácter. Se presentó en diciembre de 2025 en el ciclo Música en Adviento de la Junta de Andalucía y, desde entonces, ha actuado en el Festival Internacional de Arte Sacro de Madrid, en Guadix Clásica, en el Festival de Música Española de Cádiz y, con el Dúo del Zéfiro, en Clásicos en Verano de la Comunidad de Madrid.',
-    en: 'The ensemble combines voices, plucked strings, viola da gamba and percussion, bringing together performers with solid careers who see early music not as museum pieces but as a vibrant language that demands knowledge, but also liveliness and character. It made its debut in December 2025 at the Junta de Andalucía’s Música en Adviento series and has since performed at the Madrid International Festival of Sacred Art, Guadix Clásica, the Cádiz Festival of Spanish Music and, with the Dúo del Zéfiro, the Comunidad de Madrid’s Clásicos en Verano festival.',
+    es: 'El ensemble combina voces, cuerda pulsada, viola da gamba y percusión, integrando a intérpretes de sólida carrera que entienden la música antigua no como piezas de museo, sino como un lenguaje vibrante que requiere conocimiento, pero también viveza y carácter. Se presentó en diciembre de 2025 en el ciclo Música en Adviento de la Junta de Andalucía y, desde entonces, ha actuado en el Festival Internacional de Arte Sacro de Madrid, en Guadix Clásica, en el Festival de Música Española de Cádiz y en Clásicos en Verano de la Comunidad de Madrid.',
+    en: 'The ensemble combines voices, plucked strings, viola da gamba and percussion, bringing together performers with solid careers who see early music not as museum pieces but as a vibrant language that demands knowledge, but also liveliness and character. It made its debut in December 2025 at the Junta de Andalucía’s Música en Adviento series and has since performed at the Madrid International Festival of Sacred Art, Guadix Clásica, the Cádiz Festival of Spanish Music and the Comunidad de Madrid’s Clásicos en Verano festival.',
   },
   how: { es: 'Cómo trabajamos', en: 'How we work' },
   how1: {
-    es: 'Trabajamos desde la retórica de los afectos para ofrecer una interpretación con la intensidad y el carácter que el barroco hispano requiere. Durante décadas, mucha música española se ha interpretado con un filtro estético que no le es propio, más rígido y más frío, heredado de las lecturas del norte de Europa. Nuestro trabajo es devolverle ritmo, acento, fisicidad y palabra: cosas que están en las fuentes y en el propio idioma.',
-    en: 'We work from the rhetoric of the affections to offer performances with the intensity and character that the Hispanic Baroque demands. For decades, much Spanish music has been played through an aesthetic filter that is not its own —stiffer and cooler, inherited from Northern European readings. Our job is to give it back its rhythm, accent, physicality and word: things that are in the sources and in the language itself.',
+    es: 'Trabajamos desde la retórica de los afectos para ofrecer una interpretación con la intensidad y el carácter que el barroco hispano requiere. Aún hoy, mucha música española se escucha a través de un filtro estético que no le es propio, más rígido y más frío, heredado de las lecturas del norte de Europa: impecable, sin duda, pero con poco que contar. Nuestro trabajo es devolverle ritmo, acento, cuerpo y palabra: cosas que están en las fuentes y en el propio idioma.',
+    en: 'We work from the rhetoric of the affections to offer performances with the intensity and character that the Hispanic Baroque demands. Even today, much Spanish music is heard through an aesthetic filter that is not its own, stiffer and cooler, inherited from Northern European readings: impeccable, no doubt, but with little to say. Our job is to give it back its rhythm, its accent, its body and its words: things that are in the sources and in the language itself.',
   },
   how2: {
     es: 'No buscamos voces blancas o asépticas, sino voces con historia, capaces de decir el texto y sostener el gesto musical. Nuestros músicos son a la vez cantantes e instrumentistas: las voces tocan la percusión y la cuerda, y quien toca la viola da gamba también canta. Esa doble función da a los conciertos una energía muy particular, cohesionada y teatral.',
@@ -106,7 +106,7 @@ const t = {
 
   <section class="section name">
     <div class="wrap name__grid">
-      <Image src={gato} alt={lang === 'es' ? 'Logotipo: un gato atigrado entre volutas de viento' : 'Logo: a tabby cat amid swirls of wind'} width={300} class="name__cat" />
+      <img src={gato.src} alt={lang === 'es' ? 'Logotipo: un gato atigrado entre volutas de viento' : 'Logo: a tabby cat amid swirls of wind'} width="300" height="274" loading="lazy" decoding="async" class="name__cat" style="scale: 0.76" />
       <div class="prose">
         <p class="kicker">{tr(t.name, lang)}</p>
         <h2 class="title-section">Jácaras del Zéfiro</h2>

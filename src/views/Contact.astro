@@ -5,7 +5,7 @@ import PageHead from '../components/PageHead.astro';
 import { site } from '../data/site';
 import { tr, url, type Lang } from '../i18n';
 import azulejo from '../assets/graficos/ave-azulejo-rama.webp';
-import gato from '../assets/logo/gato.png';
+import gato from '../assets/logo/gato-v2.svg';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
@@ -51,7 +51,7 @@ const t = {
         <h2 class="title-section">{tr(t.tech, lang)}</h2>
         <ul>{t.techList[lang].map((li) => <li>{li}</li>)}</ul>
         <p class="note">{lang === 'es' ? 'Dossieres y fotos en alta resolución, en la página de' : 'Dossiers and high-resolution photos on the'} <a href={`${url('press', lang)}#kit`}>{lang === 'es' ? 'prensa' : 'press page'}</a>.</p>
-        <Image src={gato} alt="" width={120} class="tech__cat" />
+        <img src={gato.src} alt="" width="53" height="48" loading="lazy" decoding="async" class="tech__cat" />
       </div>
     </div>
   </section>
@@ -67,5 +67,5 @@ const t = {
   .tech ul { padding-left: 1.1rem; }
   .tech li { margin-bottom: 0.5rem; }
   .tech .note { padding-right: 78px; }
-  .tech :global(.tech__cat) { position: absolute; right: 16px; bottom: 12px; width: 70px; opacity: 0.85; }
+  .tech :global(.tech__cat) { position: absolute; right: 24px; bottom: 32px; width: 53px; height: auto; opacity: 0.85; }
 </style>
