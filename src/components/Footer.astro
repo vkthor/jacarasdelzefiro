@@ -37,7 +37,7 @@ const es = lang === 'es';
       <nav class="f-col" aria-label={es ? 'Secciones' : 'Sections'}>
         <p class="f-head">{es ? 'Secciones' : 'Sections'}</p>
         <ul class="f-nav">
-          {nav.map((key) => <li><a href={url(key, lang)}>{tr(ui.nav[key], lang)}</a></li>)}
+          {nav.filter((key) => key !== 'home').map((key) => <li><a href={url(key, lang)}>{tr(ui.nav[key], lang)}</a></li>)}
         </ul>
       </nav>
 

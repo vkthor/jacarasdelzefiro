@@ -28,7 +28,7 @@ export const routes = {
 export type RouteKey = keyof typeof routes;
 export const url = (key: RouteKey, lang: Lang) => routes[key][lang];
 
-export const nav: RouteKey[] = ['ensemble', 'programs', 'duo', 'press', 'scores', 'contact'];
+export const nav: RouteKey[] = ['home', 'ensemble', 'programs', 'duo', 'press', 'scores', 'contact'];
 
 export const ui = {
   siteName: { es: 'Jácaras del Zéfiro', en: 'Jácaras del Zéfiro' },
