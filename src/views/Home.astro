@@ -13,7 +13,7 @@ import { inline } from '../utils';
 
 import playa from '../assets/fotos/playa-1.jpg';
 import poster from '../assets/fotos/video-batalla.jpg';
-import duoFoto from '../assets/fotos/duo-del-zefiro.jpg';
+import duoFoto from '../assets/fotos/duo-del-zefiro-circulo.jpg';
 import gato from '../assets/logo/gato.png';
 import golondrina1 from '../assets/graficos/ave-golondrina-1.webp';
 import golondrina2 from '../assets/graficos/ave-golondrina-2.webp';
@@ -130,7 +130,7 @@ const nav = programs.navidad;
         </article>
       </div>
       <a class="duo-teaser" href={url('duo', lang)}>
-        <Image src={duoFoto} alt="" width={240} height={240} fit="cover" class="duo-teaser__img" />
+        <Image src={duoFoto} alt="" width={120} height={120} densities={[1, 2, 3]} quality={85} fit="cover" class="duo-teaser__img" />
         <span>
           <span class="kicker">{tr(t.duoKicker, lang)}</span>
           <strong class="duo-teaser__title">Dúo del Zéfiro · <em>{lang === 'es' ? 'La Cómica Historia de Don Quijote' : 'The Comical History of Don Quixote'}</em></strong>
