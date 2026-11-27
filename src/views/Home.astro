@@ -37,16 +37,17 @@ const t = {
     en: 'Founded by baritone [Víctor Cruz](https://www.victorcruz.es/en/), Jácaras del Zéfiro offers a vision of historically informed performance in which research and instinct go hand in hand. The aim is to go beyond mere archaeological reconstruction and recover the true pulse of the works: their drive, their dance and their power to move.',
   },
   intro2: {
-    es: 'El ensemble combina voces, cuerda pulsada, viola da gamba y percusión. Sus intérpretes, de sólida carrera, entienden la música antigua no como piezas de museo, sino como un lenguaje vibrante que requiere conocimiento, pero también viveza y carácter. Y casi todos cantan y tocan a la vez.',
-    en: 'The ensemble combines voices, plucked strings, viola da gamba and percussion. Its performers, all with solid careers, see early music not as museum pieces but as a vibrant language that demands knowledge, but also liveliness and character. And almost all of them sing and play at the same time.',
+    es: 'El ensemble combina voces, cuerda pulsada, viola da gamba y percusión. Sus intérpretes, de sólida carrera, entienden la música antigua no como piezas de museo, sino como un lenguaje vibrante que requiere conocimiento, pero también viveza y carácter. Y en el escenario, quien canta también toca.',
+    en: 'The ensemble combines voices, plucked strings, viola da gamba and percussion. Its performers, all with solid careers, see early music not as museum pieces but as a vibrant language that demands knowledge, but also liveliness and character. And on stage, those who sing also play.',
   },
   programsKicker: { es: 'Programas', en: 'Programmes' },
   programsTitle: { es: 'Del archivo al escenario', en: 'From the archive to the stage' },
   programsIntro: {
-    es: 'Repertorio sacro hispano del Renacimiento y el Barroco, con obras que llevaban siglos sin sonar, transcritas de los manuscritos de catedrales de España y América.',
-    en: 'Sacred Hispanic repertoire from the Renaissance and Baroque, with works unheard for centuries, transcribed from the manuscripts of cathedrals in Spain and the Americas.',
+    es: 'Repertorio hispano del Renacimiento y el Barroco, con obras que llevaban siglos sin sonar, transcritas de los manuscritos de catedrales de España y América.',
+    en: 'Hispanic repertoire from the Renaissance and Baroque, with works unheard for centuries, transcribed from the manuscripts of cathedrals in Spain and the Americas.',
   },
   avecillasStats: { es: '12 obras · 6 estrenos en tiempos modernos · 70 min', en: '12 works · 6 modern-day premieres · 70 min' },
+  navidadSubtitle: { es: 'Villancicos al Nacimiento', en: 'Villancicos for the Nativity' },
   navidadStats: { es: '11 obras · Renacimiento y Barroco · 70 min', en: '11 works · Renaissance and Baroque · 70 min' },
   duoKicker: { es: 'También', en: 'Also' },
   duoText: {
@@ -59,8 +60,8 @@ const t = {
   musiciansKicker: { es: 'Los músicos', en: 'The musicians' },
   ctaTitle: { es: '¿Programas un festival o un ciclo?', en: 'Do you programme a festival or a concert series?' },
   ctaText: {
-    es: 'Llevamos nuestros instrumentos y necesitamos poco más que una buena acústica. Escríbenos y te enviamos el dossier, la ficha técnica y las condiciones.',
-    en: 'We bring our own instruments and need little more than good acoustics. Write to us and we will send you the dossier, technical rider and terms.',
+    es: 'Llevamos nuestros propios instrumentos y nos adaptamos a iglesias, auditorios y salas de cámara: lo esencial es una buena acústica. Escríbenos y te enviamos el dossier, la ficha técnica y las condiciones.',
+    en: 'We bring our own instruments and adapt to churches, concert halls and chamber venues: what matters most is good acoustics. Write to us and we will send you the dossier, technical rider and terms.',
   },
 };
 const avec = programs.avecillas;
@@ -119,7 +120,7 @@ const nav = programs.navidad;
         <article class="card">
           <Image src={parejaPandero} alt="" width={150} class="card__art card__art--figure" />
           <h3 class="title-program card__title">{nav.title}</h3>
-          <p class="subtitle-spaced">{tr(nav.subtitle, lang)}</p>
+          <p class="subtitle-spaced">{tr(t.navidadSubtitle, lang)}</p>
           <p class="card__lead">{tr(nav.lead, lang)}</p>
           <p class="card__stats">{tr(t.navidadStats, lang)}</p>
           <div class="btn-row">

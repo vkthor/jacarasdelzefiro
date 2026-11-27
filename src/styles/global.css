@@ -109,7 +109,7 @@ h1, h2, h3, h4 { margin: 0 0 0.5em; line-height: 1.15; font-weight: 500; text-wr
   font-style: italic;
   color: var(--ink-soft);
 }
-.prose p { hyphens: auto; }
+.prose p { hyphens: manual; }
 .prose > * + h2, .prose > * + h3 { margin-top: 1.6em; }
 .prose > .kicker + h2, .prose > .kicker + h3 { margin-top: 0; }
 .prose h3 { font-family: var(--display); color: var(--maroon); font-size: 1.35rem; font-weight: 500; }
