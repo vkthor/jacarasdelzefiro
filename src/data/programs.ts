@@ -60,7 +60,7 @@ export const programs = {
     ],
     works: [
       cantiga,
-      { title: 'A batalla con los rayos', voices: a4, composer: 'Alonso de Torices', dates: '1634–1684', genre: tonoSS, source: { es: 'Catedral de Barcelona', en: 'Barcelona Cathedral' }, transcription: 'Víctor Cruz', premiere: true },
+      { title: 'A batalla con los rayos', voices: a4, composer: 'Alonso de Torices', dates: '1634–1684', genre: tonoSS, source: { es: 'Catedral de Barcelona', en: 'Barcelona Cathedral' }, transcription: 'Víctor Cruz y Jorge Enrique García', premiere: true },
       { title: 'Jilguerillo parlero', voices: duo, composer: 'José de Cáseda', dates: '1660–1725', genre: tonoSS, source: { es: 'Fondo de Sant Pere i Sant Pau de Canet de Mar', en: 'Sant Pere i Sant Pau collection, Canet de Mar' }, transcription: 'Víctor Cruz y Jorge Enrique García', premiere: true },
       { title: 'Pajarillos, ¡cantad!', voices: duo, composer: 'Sebastián Durón', dates: '1660–1716', genre: { es: 'Dúo al Santísimo Sacramento', en: 'Duet to the Blessed Sacrament' }, source: { es: 'Catedral de Burgos', en: 'Burgos Cathedral' }, transcription: josaLambea, premiere: true },
       { title: 'Callad, pensamientos', voices: a4, composer: 'Sebastián Durón', dates: '1660–1716', genre: { es: 'Tono al Santísimo Sacramento, *contrafactum* de «Abril floreciente»', en: 'Tono to the Blessed Sacrament, *contrafactum* of “Abril floreciente”' }, source: BNE, transcription: 'Víctor Cruz' },

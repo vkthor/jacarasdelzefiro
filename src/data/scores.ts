@@ -1,6 +1,6 @@
 // Partituras: transcripciones propias (PDF en /public/partituras) y de otros musicólogos (enlaces externos).
 export const ownScores = [
-  { title: 'A batalla con los rayos', composer: 'Alonso de Torices', by: 'Víctor Cruz', file: '/partituras/a-batalla-con-los-rayos.pdf', voices: 'Tiple, alto, tenor, bajete y acompañamiento', voicesEn: 'Tiple, alto, tenor, bajete and continuo', pages: 5, premiere: true },
+  { title: 'A batalla con los rayos', composer: 'Alonso de Torices', by: 'Víctor Cruz y Jorge Enrique García', file: '/partituras/a-batalla-con-los-rayos.pdf', voices: 'Tiple, alto, tenor, bajete y acompañamiento', voicesEn: 'Tiple, alto, tenor, bajete and continuo', pages: 5, premiere: true },
   { title: 'Jilguerillo parlero', composer: 'José de Cáseda', by: 'Víctor Cruz y Jorge Enrique García', file: '/partituras/jilguerillo-parlero.pdf', voices: 'Dos tiples y acompañamiento', voicesEn: 'Two tiples and continuo', pages: 5, premiere: true },
   { title: 'Gorjeos de las aves', composer: 'Anónimo', by: 'Víctor Cruz y Jorge Enrique García', file: '/partituras/gorjeos-de-las-aves.pdf', voices: 'Tiple, alto, tenor y acompañamiento', voicesEn: 'Tiple, alto, tenor and continuo', pages: 7, premiere: true },
   { title: 'Canten dos pajaritos', composer: 'Sebastián Durón', by: 'Víctor Cruz', file: '/partituras/canten-dos-pajaritos.pdf', voices: 'Dos tiples y acompañamiento', voicesEn: 'Two tiples and continuo', pages: 3, premiere: true },

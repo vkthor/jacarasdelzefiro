@@ -26,8 +26,8 @@ export const videos = {
       en: '“A batalla con los rayos” by Alonso de Torices',
     },
     caption: {
-      es: 'Estreno en tiempos modernos, en directo en el Festival Internacional de Arte Sacro de Madrid (Basílica de San Miguel, 7 de abril de 2026). Transcripción de Víctor Cruz. Imagen de Noah Shaye y sonido de Adels González.',
-      en: 'Modern-day premiere, live at the Madrid International Festival of Sacred Art (Basílica de San Miguel, 7 April 2026). Transcription by Víctor Cruz. Filmed by Noah Shaye, sound by Adels González.',
+      es: 'Estreno en tiempos modernos, en directo en el Festival Internacional de Arte Sacro de Madrid (Basílica de San Miguel, 7 de abril de 2026). Transcripción de Víctor Cruz y Jorge Enrique García. Imagen de Noah Shaye y sonido de Adels González.',
+      en: 'Modern-day premiere, live at the Madrid International Festival of Sacred Art (Basílica de San Miguel, 7 April 2026). Transcription by Víctor Cruz and Jorge Enrique García. Filmed by Noah Shaye, sound by Adels González.',
     },
   },
   teaser: {
