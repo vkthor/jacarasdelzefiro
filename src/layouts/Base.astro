@@ -62,7 +62,7 @@ const group = {
     roleName: m.role[lang],
     member: m.id === 'victor-cruz'
       ? { '@type': 'Person', '@id': directorId, name: m.name, url: `${site.directorSite}/` }
-      : { '@type': 'Person', name: m.name },
+      : { '@type': 'Person', name: m.name, ...('web' in m && m.web ? { url: m.web[lang] } : {}) },
   })),
   sameAs: [site.instagram, 'https://www.wikidata.org/wiki/Q142294615'],
 };

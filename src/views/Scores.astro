@@ -19,18 +19,22 @@ const t = {
     en: 'Heritage belongs to everyone: here are our transcriptions, so that you can study and sing them.',
   },
   description: {
-    es: 'Transcripciones de Jácaras del Zéfiro de música sacra hispana del Barroco, en PDF y de libre descarga para uso no comercial.',
-    en: 'Transcriptions by Jácaras del Zéfiro of Hispanic Baroque sacred music, as free PDF downloads for non-commercial use.',
+    es: 'Transcripciones de Jácaras del Zéfiro de música sacra hispana del Barroco, en PDF y de libre descarga con licencia CC BY 4.0.',
+    en: 'Transcriptions by Jácaras del Zéfiro of Hispanic Baroque sacred music, as free PDF downloads under a CC BY 4.0 licence.',
   },
   intro: {
-    es: 'Rescatar patrimonio no tiene sentido si se queda en un cajón. Estas son las transcripciones que hemos hecho nosotros a partir de los manuscritos originales, y que interpretamos en nuestros programas. Puedes descargarlas y usarlas libremente para estudiar e interpretar, siempre sin fines comerciales; si las programas, cita la transcripción y, si quieres, cuéntanoslo: nos hará mucha ilusión.',
-    en: 'Rescuing heritage makes no sense if it stays in a drawer. These are the transcriptions we have made ourselves from the original manuscripts and perform in our programmes. You may download them and use them freely for study and performance, always for non-commercial purposes; if you programme them, please credit the transcription and, if you like, let us know: it will make our day.',
+    es: 'Rescatar patrimonio no tiene sentido si se queda en un cajón. Estas son las transcripciones que hemos hecho nosotros a partir de los manuscritos originales, y que interpretamos en nuestros programas. Si las programas, cuéntanoslo: nos hará mucha ilusión.',
+    en: 'Rescuing heritage makes no sense if it stays in a drawer. These are the transcriptions we have made ourselves from the original manuscripts and perform in our programmes. If you programme them, let us know: it will make our day.',
   },
   own: { es: 'Nuestras transcripciones', en: 'Our transcriptions' },
   others: { es: 'Otras transcripciones que cantamos', en: 'Other transcriptions we sing' },
   othersText: {
     es: 'Estas ediciones son de otros musicólogos, que las ofrecen en abierto. Gracias a ellos por su trabajo.',
     en: 'These editions are by other musicologists, who make them freely available. Our thanks to them for their work.',
+  },
+  licence: {
+    es: ['Licencia', ': úsalas libremente citando la transcripción.'],
+    en: ['Licence', ': free to use, just credit the transcription.'],
   },
   pages: { es: 'páginas', en: 'pages' },
   by: { es: 'Transcripción de', en: 'Transcription by' },
@@ -63,6 +67,7 @@ const t = {
         })}
       </ul>
       <p class="legend"><span class="star" aria-hidden="true">✱</span> {tr(ui.premiere, lang)}</p>
+      <p class="licence">{t.licence[lang][0]} <a href={`https://creativecommons.org/licenses/by/4.0/deed.${lang}`} rel="license noopener">CC BY 4.0</a>{t.licence[lang][1]}</p>
     </div>
   </section>
   <section class="section section--tight linen-light">
@@ -91,6 +96,7 @@ const t = {
   .score__by { font-style: italic; margin-bottom: 0.9rem; }
   .star { color: var(--coral); margin-left: 0.3em; }
   .legend { font-family: var(--sans); font-size: 0.76rem; color: var(--ink-soft); margin-top: 1.4rem; }
+  .licence { margin: 0.6rem 0 0; font-size: 0.95rem; }
   .others { list-style: none; padding: 0; }
   .others li { padding: 0.8rem 0; border-bottom: 1px solid var(--line); }
 </style>

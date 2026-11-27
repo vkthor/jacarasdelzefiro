@@ -68,7 +68,7 @@ More: ${u('press')}
 
 ## Other pages
 
-- Scores (free transcriptions for study and non-commercial performance): ${u('scores')}
+- Scores (free transcriptions, CC BY 4.0 licence: free to use, crediting the transcription): ${u('scores')}
 - Dossiers (PDF) and photos: ${u('press')}#kit
 - Contact: ${u('contact')}
 `;
