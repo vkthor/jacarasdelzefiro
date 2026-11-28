@@ -97,9 +97,9 @@ const events = concerts.map((c) => {
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
     location: { '@type': 'Place', name: c.venue, address: { '@type': 'PostalAddress', addressLocality: c.city, addressCountry: 'ES' } },
     performer: c.ensemble === 'duo' ? { '@type': 'MusicGroup', name: 'Dúo del Zéfiro', url: new URL(routes.duo[lang], Astro.site).href } : { '@id': `${home}#group` },
-    organizer: { '@type': 'Organization', name: c.series[lang], ...(c.url ? { url: c.url } : {}) },
+    organizer: { '@type': 'Organization', name: c.series[lang], url: c.organizerUrl },
     isAccessibleForFree: true,
-    offers: { '@type': 'Offer', price: 0, priceCurrency: 'EUR', availability: 'https://schema.org/InStock', url: c.url ?? page },
+    offers: { '@type': 'Offer', price: 0, priceCurrency: 'EUR', availability: 'https://schema.org/InStock', validFrom: new Date(Date.parse(c.date) - 30 * 864e5).toISOString().slice(0, 10), url: c.url ?? page },
     url: c.url ?? page,
   };
 });

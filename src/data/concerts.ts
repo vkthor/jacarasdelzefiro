@@ -11,6 +11,7 @@ export type Concert = {
   program: T;
   note?: T;
   url?: string;
+  organizerUrl: string; // web del organizador (para Google)
   ensemble: 'jacaras' | 'duo';
 };
 
@@ -21,6 +22,7 @@ export const concerts: Concert[] = [
     program: { es: 'Avecillas', en: 'Avecillas' },
     note: { es: 'Lleno absoluto.', en: 'Sold out.' },
     url: 'https://www.juntadeandalucia.es/cultura/agendaculturaldeandalucia/evento/jacaras-del-zefiro-avecillas',
+    organizerUrl: 'https://www.juntadeandalucia.es/cultura/',
     ensemble: 'jacaras',
   },
   {
@@ -28,6 +30,7 @@ export const concerts: Concert[] = [
     series: { es: 'Clásicos en Verano', en: 'Clásicos en Verano' },
     program: { es: 'La Cómica Historia de Don Quijote', en: 'The Comical History of Don Quixote' },
     note: { es: 'Estreno. Tres funciones, del 14 al 16 de agosto.', en: 'Premiere. Three performances, 14–16 August.' },
+    organizerUrl: 'https://www.comunidad.madrid/',
     ensemble: 'duo',
   },
   {
@@ -35,6 +38,7 @@ export const concerts: Concert[] = [
     series: { es: 'XXXIV Ciclo Internacional Guadix Clásica (inauguración)', en: '34th Guadix Clásica International Series (opening concert)' },
     program: { es: 'Avecillas', en: 'Avecillas' },
     url: 'https://guadixclasica.com/xxxiv-edicion-ciclo-internacional-de-musica-guadix-clasica/jacaras-del-zefiro/',
+    organizerUrl: 'https://guadixclasica.com/',
     ensemble: 'jacaras',
   },
   {
@@ -43,6 +47,7 @@ export const concerts: Concert[] = [
     program: { es: 'Avecillas', en: 'Avecillas' },
     note: { es: 'Estreno del programa.', en: 'Programme premiere.' },
     url: 'https://www.madrid.org/fias/2026/jacaras-zefiro.html',
+    organizerUrl: 'https://www.madrid.org/fias/',
     ensemble: 'jacaras',
   },
   {
@@ -50,6 +55,7 @@ export const concerts: Concert[] = [
     series: { es: 'Música en Adviento (Junta de Andalucía)', en: 'Música en Adviento (Junta de Andalucía)' },
     program: { es: 'La gracia y el gozo', en: 'La gracia y el gozo' },
     note: { es: 'Concierto de presentación del grupo.', en: 'The ensemble’s debut concert.' },
+    organizerUrl: 'https://www.juntadeandalucia.es/cultura/',
     ensemble: 'jacaras',
   },
 ];
